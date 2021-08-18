@@ -23,7 +23,7 @@ void modificarEstudiante();
 
 ListaEstudiantes *lista1 = new ListaEstudiantes();
 Cola *colaErrores = new Cola();
-
+int idError=0;
 int main(){
    setlocale(LC_ALL,"");
     
@@ -136,7 +136,10 @@ void modificarEstudiante(){
             e1.setCarnet(carnet);
 
             if(carnet.size()!= 9){
-            cout<<"Error en el carnet"<<endl;
+                idError++;
+                Error e1= Error(idError,"Estudiante", "El carnet del estudiante no cumple con 9 caracteres",dpi1);
+                colaErrores->encolar(e1);
+                cout<<"Error en el carnet"<<endl;
             }
 
             lista1->modificar(dpi1, e1);
@@ -146,6 +149,9 @@ void modificarEstudiante(){
             cin>>dpi2;
             e1.setDpi(dpi2);
             if(dpi2.size() != 13){
+            idError++;
+            Error e1= Error(idError,"Estudiante", "El DPI del estudiante no cumple con 13 caracteres",dpi2);
+            colaErrores->encolar(e1);
             cout<<"Error en el dpi"<<endl;
             }
             lista1->modificar(dpi1, e1);
@@ -169,6 +175,9 @@ void modificarEstudiante(){
             e1.setCorreo(correo);
             if(validarCorreo(correo)){
             }else{
+            idError++;
+            Error e1= Error(idError,"Estudiante", "El correo del estudiante no cumple con el formato dado correcto",dpi1);
+            colaErrores->encolar(e1);
             cout<<"Error en el correo"<<endl;
             }
             lista1->modificar(dpi1, e1);
@@ -189,7 +198,7 @@ void modificarEstudiante(){
             break;
         }
     }else{
-        cout<<"No se encontro un estudiante con el siguiente dpi: "<<dpi1<<endl;
+        cout<<"No se encontro un estudiante registrado con el siguiente dpi: "<<dpi1<<endl;
     }
 
 }
@@ -303,14 +312,23 @@ void lecturaUsuarios(string ruta_){
     Estudiante e1(nombre, stoi(edad), carnet, dpi, stoi(creditos), carrera, correo, password);
 
     if(carnet.size()!= 9){
+        idError++;
+        Error e1= Error(idError,"Estudiante", "El carnet del estudiante no cumple con 9 caracteres",dpi);
+        colaErrores->encolar(e1);
         cout<<"Error en el carnet"<<endl;
     }
 
     if(dpi.size() != 13){
+        idError++;
+        Error e1= Error(idError,"Estudiante", "El carnet del DPI no cumple con 13 caracteres",dpi);
+        colaErrores->encolar(e1);
         cout<<"Error en el dpi"<<endl;
     }
     if(validarCorreo(correo)){
     }else{
+        idError++;
+        Error e1= Error(idError,"Estudiante", "El correo electronico no cumple con el formato dado correcto",dpi);
+        colaErrores->encolar(e1);
         cout<<"Error en el correo"<<endl;
     }
 
