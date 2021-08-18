@@ -1,1 +1,1 @@
-setlocale(LC_ALL,"spanish");
+C:\Users\steve\Desktop\Estudiantes.csv
