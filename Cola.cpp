@@ -52,6 +52,8 @@ void Cola::desencolar(){
     if (isEmpty()){
         cout<<"La cola esta vacía, no hay elementos para desencolar"<<endl;
     }else{
+        cout<<"Se ha desencolado el siguiente elemento:"<<endl;
+        this->primero->getError().toString();
         this->primero=this->primero->getSiguiente();
     }
 }

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-#include "Error.h""
+#include "Error.h"
 
 Error::Error(){
 
@@ -21,7 +21,12 @@ Error::Error(int id_, string tipo_, string descripcion_, string dpi_){
 };
 
 void Error::toString(){
+    if(this->tipo=="Estudiante") {
     cout<<"\nID: "<<id<<"\nTipo: "<<tipo<<"\nDPI: "<<dpi<<"\nDescripcion: "<<descripcion<<endl;
+    }
+    if(this->tipo=="Tarea") {
+    cout<<"\nID: "<<id<<"\nTipo: "<<tipo<<"\nID de Tarea: "<<dpi<<"\nDescripcion: "<<descripcion<<endl;
+    }
 };
 
 void Error::setId(int id_){

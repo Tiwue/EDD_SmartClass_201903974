@@ -15,5 +15,6 @@ class ListaEstudiantes{
     void eliminar(string dpi_);
     void modificar(string dpi_);
     void imprimir();
-    void modificar(string dpi_, Estudiante modificado_); 
+    void modificar(string dpi_, Estudiante modificado_);
+    bool carnetExist(string carnet_); 
 };

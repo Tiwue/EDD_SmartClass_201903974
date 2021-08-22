@@ -113,6 +113,7 @@ void ListaEstudiantes::modificar(string dpi_, Estudiante estudiante_){
     if(this->inicio!=NULL){
     if(aux->getEstudiante().getDpi()==dpi_){
         aux->setEstudiante(estudiante_);
+        return;
     }
 	aux=aux->getSiguiente();	
     while(aux !=this->inicio){
@@ -157,9 +158,27 @@ void ListaEstudiantes::eliminar(string dpi_){
             return;
     }else{
        cout<< "La lista aun no tiene estudiantes"<<endl;
-       return;
     }
 
 }
 
+bool ListaEstudiantes::carnetExist(string carnet_){
+
+    NodoEstudiante *aux = this->inicio;
+    if(this->inicio!=NULL){
+    if(aux->getEstudiante().getCarnet()==carnet_){
+        return true;
+    }
+	aux=aux->getSiguiente();	
+    while(aux !=this->inicio){
+            if(aux->getEstudiante().getCarnet()==carnet_){
+                return true;
+            }
+        aux = aux->getSiguiente();
+        }
+        return false;
+    }else{
+       return false;
+    }
+}
 
