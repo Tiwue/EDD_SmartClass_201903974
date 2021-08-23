@@ -26,7 +26,7 @@ void lecturaTareas(string ruta_);
 bool validarFecha(string fecha_);
 void linealizar();
 
-Tarea matriztareas[5][9][30];
+Tarea matriztareas[5][30][9];
 ListaEstudiantes *lista1 = new ListaEstudiantes();
 ListaTareas *lista2 = new ListaTareas();
 Cola *colaErrores = new Cola();
@@ -42,7 +42,7 @@ int main(){
         string ruta2="";
         inicializarMatriz();
         cout<<"\n     MENU PRINCIPAL\n"<< endl;
-        cout << "1.Carga de Usuarios \n2.Carga de Tareas \n3.Ingreso Manual\n4.Reportes\n5.Cola de Errores\n6.Salir\n7.Tareas" <<endl;
+        cout << "1.Carga de Usuarios \n2.Carga de Tareas \n3.Ingreso Manual\n4.Reportes\n5.Cola de Errores\n6.Salir" <<endl;
         cout << "\nEliga una opción:" << endl;
         cin >> eleccion;
         system("cls");
@@ -228,14 +228,14 @@ void modificarEstudiante(){
 }
 
 void modificarTarea(){
-    string mes, dia, hora, carnet, nombre, descripcion, materia, fecha, estado,horaS,id1,id2;
-    int i,j,k;
+    string m, d, h, carnet, nombre, descripcion, materia, fecha, estado,horaS;
+    int i,j,k, mes, dia, hora,id1,id2;
     bool agregar=true;
 
     cout<<"Ingrese el id de la tarea: "<<endl;
     cin>>id1;
-    if(lista2->exist(id1)){
-        Tarea e1 = lista2->searchTarea(id1);
+    if(lista2->exist(to_string(id1))){
+        Tarea e1 = lista2->searchTarea(to_string(id1));
         
         cout<<"\n   Eliga el campo que desea modificar:\n1.Nombre\n2.Carnet\n3.Descripcion\n4.Materia\n5.Mes\n6.Dia\n7.Hora\n8.Estado\n9.Cancelar"<<endl;
         int opcion =0;
@@ -247,7 +247,7 @@ void modificarTarea(){
             cin.ignore();
             getline(cin,nombre);
             e1.setNombre(nombre);
-            lista2->modificar(id1, e1);
+            lista2->modificar(to_string(id1), e1);
             break;
         case 2:
             cout<<"Ingrese el carnet nuevo:"<<endl;
@@ -256,139 +256,145 @@ void modificarTarea(){
 
             if(carnet.size()!= 9){
                 idError++;
-                Error e1= Error(idError,"Estudiante", "El carnet del estudiante no cumple con 9 caracteres",id1);
-                colaErrores->encolar(e1);
+                Error e2= Error(idError,"Estudiante", "El carnet del estudiante no cumple con 9 caracteres",to_string(id1));
+                colaErrores->encolar(e2);
                 cout<<"Error en el carnet"<<endl;
             }
 
-            lista2->modificar(id1, e1);
+            lista2->modificar(to_string(id1), e1);
             break;
         case 3:
             cout<<"Ingrese la descripción nueva:"<<endl;
             cin.ignore();
             getline(cin,descripcion);
-            e1.setDescripcion(id1);
-            lista2->modificar(id1, e1);
+            e1.setDescripcion(to_string(id1));
+            lista2->modificar(to_string(id1), e1);
             break;
         case 4:
             cout<<"Ingrese la materia nueva:"<<endl;
             cin.ignore();
             getline(cin,materia);
             e1.setMateria(materia);
-            lista2->modificar(id1, e1);
+            lista2->modificar(to_string(id1), e1);
             break;
         case 5:
             cout<<"Ingrese el nuevo mes de entrega:"<<endl;
             cin>>mes;
-            if(stoi(mes)>6 && stoi(mes)<12){
-            i=stoi(mes)-7;
-            j=e1.getHora();
-            k=e1.getDia();
-            dia=e1.getDia();
-            id2=k+30*(j+9*i);
-            if(lista2->exist(id2)){
+            if(mes>6 && mes<12){
+            i=mes-7;
+            j=e1.getDia();
+            k=e1.getHora();
+            dia=e1.getDia()+1;
+            id2=k+9*(j+30*i);
+            if(lista2->exist(to_string(id2))){
                  idError++;
-                Error e1= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",id1);
-                colaErrores->encolar(e1);
+                Error e2= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",to_string(id1));
+                colaErrores->encolar(e2);
                 cout<<"Error horario ya se encuentra ocupado"<<endl;
 
             }else{
             e1.setMes(i);
-            if(mes.size()==1){
-                fecha="2021/0"+mes+"/";
+            e1.setId(id2);
+            if(to_string(mes).length()==1){
+                fecha="2021/0"+to_string(mes)+"/";
             }else{
-            fecha="2021/"+mes+"/";
+            fecha="2021/"+to_string(mes)+"/";
             }
 
-        if(dia.size()==1){
-        fecha.append("0"+dia);
-        }else{
-        fecha.append(dia);
-        }
+            if(to_string(dia).length()==1){
+            fecha.append("0"+to_string(dia));
+            }else{
+            fecha.append(to_string(dia));
+            }
             e1.setFechaS(fecha);
-            lista2->modificar(id2, e1);
-            lista2->eliminar(id1);
+            
+            lista2->modificar(to_string(id2), e1);
+            lista2->eliminar(to_string(id1));
             }
             }else{
                 idError++;
-            Error e1= Error(idError,"Tarea", "El mes indicado en la modificacion no es permitido en el rango establecido",id1);
-            colaErrores->encolar(e1);
+            Error e2= Error(idError,"Tarea", "El mes indicado en la modificacion no es permitido en el rango establecido",to_string(id1));
+            colaErrores->encolar(e2);
             cout<<"Error en el mes"<<endl;
             }
             break;
         case 6:
             cout<<"Ingrese el nuevo dia de entrega:"<<endl;
             cin>>dia;
-            if(stoi(dia)>0 && stoi(dia)<31){
+            if(dia>0 && dia<31){
             i=e1.getMes();
-            j=e1.getHora();
-            k=stoi(dia)-1;
-            id2=k+30*(j+9*i);
-            mes=e1.getMes();
-            if(lista2->exist(id2)){
+            j=dia-1;
+            k=e1.getHora();
+            id2=k+9*(j+30*i);
+            mes=e1.getMes()+7;
+            if(lista2->exist(to_string(id2))){
                  idError++;
-                Error e1= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",id1);
-                colaErrores->encolar(e1);
+                Error e2= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",to_string(id1));
+                colaErrores->encolar(e2);
                 cout<<"Error horario ya se encuentra ocupado"<<endl;
 
             }else{
-            e1.setDia(k);
-            if(mes.size()==1){
-                fecha="2021/0"+mes+"/";
+            e1.setDia(j);
+            e1.setId(id2);
+            if(to_string(mes).size()==1){
+                fecha="2021/0"+to_string(mes)+"/";
             }else{
-            fecha="2021/"+mes+"/";
+            fecha="2021/"+to_string(mes)+"/";
             }
 
-        if(dia.size()==1){
-        fecha.append("0"+dia);
-        }else{
-        fecha.append(dia);
-        }
+            if(to_string(dia).size()==1){
+            fecha.append("0"+to_string(dia));
+            }else{
+            fecha.append(to_string(dia));
+            }
             e1.setFechaS(fecha);
-            lista2->modificar(id2, e1);
-            lista2->eliminar(id1);
+            lista2->modificar(to_string(id2), e1);
+            lista2->eliminar(to_string(id1));
             }
             }else{
             idError++;
-            Error e1= Error(idError,"Tarea", "El dia indicado en la modificacion no es permitido en el rango establecido",id1);
-            colaErrores->encolar(e1);
+            Error e2= Error(idError,"Tarea", "El dia indicado en la modificacion no es permitido en el rango establecido",to_string(id1));
+            colaErrores->encolar(e2);
             cout<<"Error en el mes"<<endl;
 
             }
             break;
         case 7:
+
             cout<<"Ingrese la nueva hora de entrega:"<<endl;
             cin>>hora;
-            if(stoi(hora)>7 && stoi(hora)<17){
+            if(hora>7 && hora<17){
             i=e1.getMes();
-            j=stoi(hora)-8;
-            k=e1.getDia();
-            id2=k+30*(j+9*i);
-            if(lista2->exist(id2)){
+            j=e1.getDia();
+            k=hora-8;
+            id2=k+9*(j+30*i);
+            if(lista2->exist(to_string(id2))){
                  idError++;
-                Error e1= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",id1);
-                colaErrores->encolar(e1);
+                Error error= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",to_string(id1));
+                colaErrores->encolar(error);
                 cout<<"Error horario ya se encuentra ocupado"<<endl;
             }else{
-            e1.setHora(j);
-            horaS=hora+":00";
-
+            e1.setHora(k);
+            e1.setId(id2);
+            horaS=to_string(hora)+":00";
+            
             e1.setHoraS(horaS);
-            lista2->modificar(id2, e1);
-            lista2->eliminar(id1);
-            }
+            lista2->modificar(to_string(id2), e1);
+            lista2->eliminar(to_string(id1));
+            };
             }else{
             idError++;
-            Error e1= Error(idError,"Tarea", "La hora indicada en la modificacion no es permitida en el rango establecido",id1);
-            colaErrores->encolar(e1);
             cout<<"Error en el mes"<<endl;
+            Error e2= Error(idError,"Tarea", "La hora indicada en la modificacion no es permitida en el rango establecido",to_string(id1));
+            colaErrores->encolar(e2);
+            
             }
             break;
         case 8:
             cout<<"Ingrese el estado nuevo:"<<endl;
             cin>>estado;
             e1.setEstado(estado);
-            lista2->modificar(id1, e1);
+            lista2->modificar(to_string(id1), e1);
             break;
         default:
             break;
@@ -478,9 +484,9 @@ void ingresarTarea(){
     }
     horaS=hora.append(":00");
     i=stoi(mes)-7;
-    j=stoi(hora)-8;
-    k=stoi(dia)-1;
-    id=k+30*(j+9*i);
+    j=stoi(dia)-1;
+    k=stoi(hora)-8;
+    id=k+9*(j+30*i);
 
     Tarea t1(id,nombre,carnet,descripcion,materia,horaS,fecha,estado,i,j,k);
 
@@ -675,9 +681,9 @@ ifstream archivo(ruta_);
     getline(stream, fecha, delimitador);
     getline(stream, estado, delimitador);
     i=stoi(mes)-7;
-    j=stoi(hora)-8;
-    k=stoi(dia)-1;
-    id=k+30*(j+9*i);
+    j=stoi(dia)-1;
+    k=stoi(hora)-8;
+    id=k+9*(j+30*i);
     horaS=hora.append(":00");
 
     Tarea t1(id,nombre,carnet,descripcion,materia,horaS,fecha,estado,i,j,k);
@@ -788,11 +794,11 @@ void menuCola(){
 void inicializarMatriz(){
     for (int i = 0; i < 5; i++)
     {
-        for (int j = 0; j < 9; j++)
+        for (int j = 0; j < 30; j++)
         {
-            for (int k = 0; k < 30; k++)
+            for (int k = 0; k < 9; k++)
             {
-                matriztareas[i][j][k]=  Tarea(k+30*(j+9*i),"-1","-1","-1","-1","-1","-1","-1",i,j,k);   
+                matriztareas[i][j][k]=  Tarea(k+9*(j+30*i),"-1","-1","-1","-1","-1","-1","-1",i,j,k);   
             }   
         }  
     }
@@ -806,16 +812,16 @@ void inicializarMatriz(){
 void linealizar(){
     for (int i = 0; i < 5; i++)
     {
-        for (int j = 0; j < 9; j++)
+        for (int j = 0; j < 30; j++)
         {
-            for (int k = 0; k < 30; k++)
+            for (int k = 0; k < 9; k++)
             {
-                if(lista2->exist(to_string(k+30*(j+9*i)))){
+                if(lista2->exist(to_string(k+9*(j+30*i)))){
                     idError++;
-                    Error e1= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",to_string(k+30*(j+9*i)));
+                    Error e1= Error(idError,"Tarea", "Ya existe una tarea registrada en el mismo horario, no se pudo agregar",to_string(k+9*(j+30*i)));
                     colaErrores->encolar(e1);
             }else{
-                lista2->modificar(to_string(k+30*(j+9*i)), matriztareas[i][j][k]) ;   
+                lista2->modificar(to_string(k+9*(j+30*i)), matriztareas[i][j][k]) ;   
             }
             }
             
