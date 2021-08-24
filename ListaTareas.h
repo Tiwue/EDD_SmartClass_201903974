@@ -18,5 +18,6 @@ class ListaTareas{
     void imprimir();
     void modificar(string id_, Tarea modificado_);
     void  graficar();
+    string generarCodigo();
 
 };

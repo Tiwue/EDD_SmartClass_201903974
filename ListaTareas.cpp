@@ -180,3 +180,32 @@ void ListaTareas::graficar(){
     }
 
 }
+
+string ListaTareas::generarCodigo(){
+    string texto="";
+
+    NodoTarea *aux = this->primero;
+    if(this->primero!=NULL){	
+    while(aux != NULL){
+        if(aux->getTarea().getNombre()!= "-1"){
+        texto=texto+"\n¿element type=\"task\"?";
+        texto=texto+" \n    ¿item Carnet = \""+aux->getTarea().getCarnet()+"\" $?";
+        texto=texto+" \n    ¿item Nombre = \""+aux->getTarea().getNombre()+"\" $?";
+        texto=texto+" \n    ¿item Descripcion = \""+aux->getTarea().getDescripcion()+"\" $?";
+        texto=texto+" \n    ¿item Materia = \""+aux->getTarea().getMateria()+"\" $?";
+        texto=texto+" \n    ¿item Fecha = \""+aux->getTarea().getFechaS()+"\" $?";
+        texto=texto+" \n    ¿item Hora = \""+aux->getTarea().getHoraS()+"\" $?";
+        texto=texto+" \n    ¿item Estado = \""+aux->getTarea().getEstado()+"\" $?";
+        texto=texto+"\n¿$element?";
+        }
+        aux = aux->getSiguiente();
+        }
+        return texto;
+    }else{
+        cout<<"La lista de estudiantes aun no tiene elementos"<<endl;
+    }
+
+    return texto;
+
+
+}

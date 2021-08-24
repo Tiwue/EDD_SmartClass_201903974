@@ -67,15 +67,15 @@ void Cola::graficar(){
         while(aux!=NULL){
         ultimo=aux->getError().getId();
         grafica=grafica+"\nNode"+to_string(aux->getError().getId())+"[label=\"ID:"+to_string(aux->getError().getId())+"\\nTipo: "+aux->getError().getTipo()+"\\nDescripcion: "+aux->getError().getDescripcion()+"\\nIdentificador: "+aux->getError().getDpi()+"\"];\n";
-        cout<<"se agrego un nuevo nodo"<<endl;
+        
         if(aux->getSiguiente()!=NULL){
             grafica=grafica+"\nNode"+to_string(aux->getError().getId())+"->Node"+to_string(aux->getError().getId()+1);
-            cout<<"se agregó nueva flecha"<<endl;
+            
         }
         aux=aux->getSiguiente();
         }
         grafica=grafica+"\nNode"+to_string(ultimo)+"->entrada[arrowhead=none]";
-        cout<<"se agrego ultima fleca"<<endl;
+        
         grafica=grafica+"\n}";
 
         try{

@@ -228,3 +228,37 @@ void ListaEstudiantes::graficar(){
     }
 
 }
+
+string ListaEstudiantes::generarCodigo(){
+    string texto="";
+    NodoEstudiante *aux = this->inicio;
+    if(this->inicio!=NULL){
+    texto=texto+"\n¿element type=\"user\"?";
+    texto=texto+" \n    ¿item Carnet = \""+aux->getEstudiante().getCarnet()+"\" $?";
+    texto=texto+" \n    ¿item DPI = \""+aux->getEstudiante().getDpi()+"\" $?";
+    texto=texto+" \n    ¿item Nombre = \""+aux->getEstudiante().getNombre()+"\" $?";
+    texto=texto+" \n    ¿item Carrera = \""+aux->getEstudiante().getCarrera()+"\" $?";
+    texto=texto+" \n    ¿item Password = \""+aux->getEstudiante().getPassword()+"\" $?";
+    texto=texto+" \n    ¿item Creditos = \""+to_string(aux->getEstudiante().getCreditos())+"\" $?";
+    texto=texto+" \n    ¿item Edad = \""+to_string(aux->getEstudiante().getEdad())+"\" $?";
+    texto=texto+" \n    ¿item Correo = \""+aux->getEstudiante().getCorreo()+"\" $?";
+    texto=texto+"\n¿$element?";
+	aux=aux->getSiguiente();	
+    while(aux !=this->inicio){
+        texto=texto+"\n¿element type=\"user\"?";
+         texto=texto+" \n   ¿item Carnet = \""+aux->getEstudiante().getCarnet()+"\" $?";
+        texto=texto+" \n    ¿item DPI = \""+aux->getEstudiante().getDpi()+"\" $?";
+        texto=texto+" \n    ¿item Nombre = \""+aux->getEstudiante().getNombre()+"\" $?";
+        texto=texto+" \n    ¿item Carrera = \""+aux->getEstudiante().getCarrera()+"\" $?";
+        texto=texto+" \n    ¿item Password = \""+aux->getEstudiante().getPassword()+"\" $?";
+        texto=texto+" \n    ¿item Creditos = \""+to_string(aux->getEstudiante().getCreditos())+"\" $?";
+        texto=texto+" \n    ¿item Edad = \""+to_string(aux->getEstudiante().getEdad())+"\" $?";
+        texto=texto+" \n    ¿item Correo = \""+aux->getEstudiante().getCorreo()+"\" $?";
+        texto=texto+"\n¿$element?";
+        aux = aux->getSiguiente();
+        }
+    }
+
+    return texto;
+
+}

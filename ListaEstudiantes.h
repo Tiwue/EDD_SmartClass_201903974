@@ -18,4 +18,5 @@ class ListaEstudiantes{
     void modificar(string dpi_, Estudiante modificado_);
     bool carnetExist(string carnet_);
     void graficar();
+    string generarCodigo();
 };

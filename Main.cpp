@@ -26,6 +26,7 @@ void lecturaTareas(string ruta_);
 bool validarFecha(string fecha_);
 void linealizar();
 void reportes();
+void codigoSalida();
 Tarea matriztareas[5][30][9];
 ListaEstudiantes *lista1 = new ListaEstudiantes();
 ListaTareas *lista2 = new ListaTareas();
@@ -900,11 +901,38 @@ void reportes(){
             case 5:
             menuCola();
             break;
+            case 6:
+            codigoSalida();
+            break;
+            case 7:
+            on=0;
+            break;
                 
             default:
             cout<<"Debe seleccionar una opcion correcta. Intente nuevamente"<<endl;
         }
     }while(on != 0);
+}
+
+void codigoSalida(){
+    string texto="¿Elements?\n";
+    texto=texto+lista1->generarCodigo();
+    texto=texto+lista2->generarCodigo();
+    texto=texto+"¿$Elements?";
+
+        try{
+        //Esta variable debe ser modificada para agregar su path de creacion de la Grafica
+
+        ofstream file;
+        file.open("codigo.txt",std::ios::out);
+
+        file<<texto;
+        file.close();
+    }catch(exception e){
+        cout<<"Fallo detectado"<<endl;
+    }
+    
+
 }
 /*C:\Users\steve\Desktop\Estudiantes.csv*/
 /*C:\Users\steve\Desktop\Tareas.csv*/
