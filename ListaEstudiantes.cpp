@@ -1,7 +1,8 @@
 #include "ListaEstudiantes.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
-
+int index=0;
 ListaEstudiantes::ListaEstudiantes(){
 
     this->inicio=NULL;
@@ -182,3 +183,48 @@ bool ListaEstudiantes::carnetExist(string carnet_){
     }
 }
 
+void ListaEstudiantes::graficar(){
+    int id=1;
+    string grafica="digraph List {rankdir=LR;node [shape = note, color=blue , style=filled, fillcolor=lightgray];";
+    NodoEstudiante *aux=this->inicio;
+    if(this->inicio!=NULL){
+        grafica=grafica+"\nNode1[label=\"Carnet:"+aux->getEstudiante().getCarnet()+"\\nNombre: "+aux->getEstudiante().getNombre()+"\\nDPI: "+aux->getEstudiante().getDpi()+"\\nCarrera: "+aux->getEstudiante().getCarrera()+"\\nCorreo: "+aux->getEstudiante().getCorreo()+"\\nPassword: "+aux->getEstudiante().getPassword()+"\\nCreditos: "+to_string(aux->getEstudiante().getCreditos())+"\\nEdad: "+to_string(aux->getEstudiante().getEdad())+"\"];\n";
+        grafica=grafica+"\nNode"+to_string(id)+"->Node"+to_string(id+1);
+        aux=aux->getSiguiente();
+        while(aux!=this->inicio){
+        id++;
+        grafica=grafica+"\nNode"+to_string(id)+"[label=\"Carnet:"+aux->getEstudiante().getCarnet()+"\\nNombre: "+aux->getEstudiante().getNombre()+"\\nDPI: "+aux->getEstudiante().getDpi()+"\\nCarrera: "+aux->getEstudiante().getCarrera()+"\\nCorreo: "+aux->getEstudiante().getCorreo()+"\\nPassword: "+aux->getEstudiante().getPassword()+"\\nCreditos: "+to_string(aux->getEstudiante().getCreditos())+"\\nEdad: "+to_string(aux->getEstudiante().getEdad())+"\"];\n";
+        if(aux->getSiguiente()!=this->inicio){
+            grafica=grafica+"\nNode"+to_string(id)+"->Node"+to_string(id+1);
+        }
+        grafica=grafica+"\nNode"+to_string(id)+"->Node"+to_string(id-1);
+        
+        aux=aux->getSiguiente();
+        }
+        grafica=grafica+"\nNode1->Node"+to_string(id);
+        grafica=grafica+"\nNode"+to_string(id)+"->Node1";
+        grafica=grafica+"\n}";
+
+        try{
+        //Esta variable debe ser modificada para agregar su path de creacion de la Grafica
+        string path = "C:\\Users\\steve\\Desktop\\";
+
+        ofstream file;
+        file.open("Graph.dot",std::ios::out);
+
+        if(file.fail()){
+            exit(1);
+        }
+        file<<grafica;
+        file.close();
+        index++;
+        string command = "dot -Tpdf Graph.dot -o Estudiantes"+to_string(index)+".pdf";
+        system(command.c_str());
+    }catch(exception e){
+        cout<<"Fallo detectado"<<endl;
+    }
+    }else{
+        cout<<"la lista esta vacia"<<endl;
+    }
+
+}

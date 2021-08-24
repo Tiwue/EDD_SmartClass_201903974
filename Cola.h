@@ -11,4 +11,5 @@ class Cola{
     void encolar(Error error_);
     void desencolar();
     void recorrer();
+    void graficar();
 };

@@ -1,7 +1,8 @@
 #include "Cola.h"
 #include <iostream>
+#include <fstream>
 using namespace std;
-
+int idDocumento=0;
 Cola::Cola(){
     this->primero=NULL;
 }
@@ -57,3 +58,47 @@ void Cola::desencolar(){
         this->primero=this->primero->getSiguiente();
     }
 }
+
+void Cola::graficar(){
+    int ultimo=0;
+    string grafica="digraph List {rankdir=LR;node [shape = box3d, color=blue , style=filled, fillcolor=lightgray];\nentrada[shape=larrow ]\nsalida[shape=larrow]\nsalida->Node"+to_string(this->primero->getError().getId());
+    NodoCola *aux = this->primero;
+    if(this->primero!=NULL){
+        while(aux!=NULL){
+        ultimo=aux->getError().getId();
+        grafica=grafica+"\nNode"+to_string(aux->getError().getId())+"[label=\"ID:"+to_string(aux->getError().getId())+"\\nTipo: "+aux->getError().getTipo()+"\\nDescripcion: "+aux->getError().getDescripcion()+"\\nIdentificador: "+aux->getError().getDpi()+"\"];\n";
+        cout<<"se agrego un nuevo nodo"<<endl;
+        if(aux->getSiguiente()!=NULL){
+            grafica=grafica+"\nNode"+to_string(aux->getError().getId())+"->Node"+to_string(aux->getError().getId()+1);
+            cout<<"se agregó nueva flecha"<<endl;
+        }
+        aux=aux->getSiguiente();
+        }
+        grafica=grafica+"\nNode"+to_string(ultimo)+"->entrada[arrowhead=none]";
+        cout<<"se agrego ultima fleca"<<endl;
+        grafica=grafica+"\n}";
+
+        try{
+        //Esta variable debe ser modificada para agregar su path de creacion de la Grafica
+        string path = "C:\\Users\\steve\\Desktop\\";
+
+        ofstream file;
+        file.open("Graph.dot",std::ios::out);
+
+        if(file.fail()){
+            exit(1);
+        }
+        file<<grafica;
+        file.close();
+        idDocumento++;
+        string command = "dot -Tpdf Graph.dot -o Errores"+to_string(idDocumento)+".pdf";
+        system(command.c_str());
+    }catch(exception e){
+        cout<<"Fallo detectado"<<endl;
+    }
+    }else{
+        cout<<"la cola esta vacia"<<endl;
+    }
+
+}
+

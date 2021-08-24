@@ -3,6 +3,7 @@
 class ListaTareas{
     private:
     NodoTarea *primero;
+    NodoTarea *ultimo;
     
 
     public:
@@ -12,9 +13,10 @@ class ListaTareas{
     bool exist(string dpi_);
     int getSize();
     void append(Tarea tarea_, string id_);
-    void insertar(Tarea tarea_, string id_);
+    void insertar(Tarea tarea_);
     void eliminar(string id_);
     void imprimir();
     void modificar(string id_, Tarea modificado_);
+    void  graficar();
 
 };

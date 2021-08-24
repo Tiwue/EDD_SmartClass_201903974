@@ -25,7 +25,7 @@ void inicializarMatriz();
 void lecturaTareas(string ruta_);
 bool validarFecha(string fecha_);
 void linealizar();
-
+void reportes();
 Tarea matriztareas[5][30][9];
 ListaEstudiantes *lista1 = new ListaEstudiantes();
 ListaTareas *lista2 = new ListaTareas();
@@ -33,16 +33,16 @@ Cola *colaErrores = new Cola();
 int idError=0;
 int main(){
    setlocale(LC_ALL,"");
-    
+    inicializarMatriz();
     bool on= 1;
     
     do{
         int eleccion = 0;
         string ruta1="";
         string ruta2="";
-        inicializarMatriz();
+        
         cout<<"\n     MENU PRINCIPAL\n"<< endl;
-        cout << "1.Carga de Usuarios \n2.Carga de Tareas \n3.Ingreso Manual\n4.Reportes\n5.Cola de Errores\n6.Salir" <<endl;
+        cout << "1.Carga de Usuarios \n2.Carga de Tareas \n3.Ingreso Manual\n4.Reportes\n5.Salir" <<endl;
         cout << "\nEliga una opción:" << endl;
         cin >> eleccion;
         system("cls");
@@ -64,22 +64,20 @@ int main(){
             ingresoManual();
             break;
             case 4:
-            cout<<"Reportes"<<endl;
+            reportes();
             break;   
             case 5:
-            menuCola();
+            on=0;
             break;  
             case 6:
-            on=0;
-            break;
-            case 7:
             lista2->imprimir();
             break;
-            case 8:
+            case 7:
             lista1->imprimir();
-            break;     
+            break;
             default:
             cout<<"Debe seleccionar una opcion correcta. Intente nuevamente"<<endl;
+            break;
         }
     }
     while(on != 0);
@@ -750,7 +748,6 @@ ifstream archivo(ruta_);
     archivo.close();
 }
 
-
 bool validarCorreo(string correo_){
     const regex expReg("[a-zA-Z0-9.]+@[a-zA-Z0-9]+\\.((com)|(es)|(org))");
     return regex_match(correo_, expReg);
@@ -768,7 +765,7 @@ void menuCola(){
     do{
         int eleccion=0;
         cout<<"\n   COLA DE ERRORES\n"<<endl;
-        cout << "1.Ver Cola \n2.Desencolar \n3.Regresar" <<endl;
+        cout << "1.Ver Cola \n2.Desencolar \n3.Imprimir en consola" <<endl;
         cout << "\nEliga una opción:" << endl;
         cin >> eleccion;
         int confirmacion;
@@ -776,15 +773,20 @@ void menuCola(){
         string dpi;
         switch ( eleccion){
             case 1:
-                colaErrores->recorrer();
+                if(colaErrores->isEmpty()){
+                    cout<<"No hay errores en cola"<<endl;
+                }else{
+                colaErrores->graficar();
+                }
             break;
             case 2:
                 colaErrores->desencolar();
             break;
             case 3:
-            
-            on=0;
-            break;    
+            colaErrores->recorrer();
+            break;  
+            case 4:
+            on=0;  
             default:
             cout<<"Debe seleccionar una opcion correcta. Intente nuevamente"<<endl;
         }
@@ -804,7 +806,7 @@ void inicializarMatriz(){
     }
 
     for(int i=0;i<1350;i++){
-        lista2->insertar(Tarea(i,"-1","-1","-1","-1","-1","-1","-1",-1,-1,-1),to_string(i));
+        lista2->insertar(Tarea(i,"-1","-1","-1","-1","-1","-1","-1",-1,-1,-1));
     }
     
 }
@@ -828,7 +830,81 @@ void linealizar(){
         }
         
     }
+    
 }
 
+void reportes(){
+    bool on=1;
+    do{
+        int eleccion=0;
+        cout<<"\n   MENU Reportes\n"<<endl;
+        cout << "1.Lista Estudiantes \n2.Lista Tareas Linealizadas \n3.Busqueda en estructura linealizada \n4.Busqueda de Posicion en Estrucutura linealizada\n5.Cola de Errores\n6.Codigo de Salida\n7.Salir" <<endl;
+        cout << "\nEliga una opción:" << endl;
+        cin >> eleccion;
+        int confirmacion;
+        system("cls");
+        string dpi;
+        int mes, dia,hora,id;
+        switch ( eleccion){
+            case 1:
+                if(colaErrores->isEmpty()){
+                lista1->graficar();        
+                }else{
+                    cout<<"Hay errores en cola, debe arreglar primero antes de graficar"<<endl;
+                }        
+            break;
+            case 2:
+            if(colaErrores->isEmpty()){
+               lista2->graficar();
+            }else{
+                cout<<"Hay errores en cola, debe arreglar primero antes de graficar"<<endl;
+            }
+            break;
+            case 3:
+            if(colaErrores->isEmpty()){
+                cout<<"Ingrese el mes:"<<endl;
+                cin>>mes;
+                cout<<"Ingrese el dia:"<<endl;
+                cin>>dia;
+                cout<<"Ingrese la hora:"<<endl;
+                cin>>hora;
+                id=(hora-8)+9*((dia-1)+30*(mes-7));
+                if(lista2->exist(to_string(id))){
+                    Tarea t1=lista2->searchTarea(to_string(id));
+                    cout<<"\nID: "<<t1.getId()<<endl;
+                    cout<<"Nombre de la Tarea: "<<t1.getNombre()<<endl;
+                    cout<<"Descripcion: "<<t1.getDescripcion()<<endl;
+                    cout<<"Carnet: "<<t1.getCarnet()<<endl;
+                    cout<<"Materia: "<<t1.getMateria()<<endl;
+                    cout<<"Fecha: "<<t1.getFechaS()<<endl;
+                    cout<<"Hora: "<<t1.getHoraS()<<endl;
+                    cout<<"Estado: "<<t1.getEstado()<<endl;
+                }else{
+                    cout<<"No existe una tarea con estos parametros"<<endl;
+                }
+            }else{
+                cout<<"Hay errores en cola, debe arreglar primero antes de graficar"<<endl;
+            }
+            break;    
+            case 4:
+             cout<<"Ingrese el mes:"<<endl;
+                cin>>mes;
+                cout<<"Ingrese el dia:"<<endl;
+                cin>>dia;
+                cout<<"Ingrese la hora:"<<endl;
+                cin>>hora;
+                id=(hora-8)+9*((dia-1)+30*(mes-7));
+                cout<<"\nEl ID es: "<<to_string(id)<<endl;
+            
+            break;
+            case 5:
+            menuCola();
+            break;
+                
+            default:
+            cout<<"Debe seleccionar una opcion correcta. Intente nuevamente"<<endl;
+        }
+    }while(on != 0);
+}
 /*C:\Users\steve\Desktop\Estudiantes.csv*/
 /*C:\Users\steve\Desktop\Tareas.csv*/
