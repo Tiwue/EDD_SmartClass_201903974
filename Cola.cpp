@@ -91,7 +91,7 @@ void Cola::graficar(){
         file<<grafica;
         file.close();
         idDocumento++;
-        string command = "dot -Tpdf Graph.dot -o Errores"+to_string(idDocumento)+".pdf";
+        string command = "dot -Tpng Graph.dot -o Errores"+to_string(idDocumento)+".png";
         system(command.c_str());
     }catch(exception e){
         cout<<"Fallo detectado"<<endl;
