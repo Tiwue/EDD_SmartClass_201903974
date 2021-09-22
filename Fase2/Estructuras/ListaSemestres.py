@@ -1,0 +1,32 @@
+from Estructuras.NodoSemestre import NodoSemestre
+
+class ListaSemestres:
+    def __init__(self):
+        self.Primero = None
+
+    def getSize(self):
+        aux = self.Primero
+        contador = 0
+        while aux is not None:
+            contador += 1
+            aux = aux.next
+        return contador
+
+    def isEmpty(self):
+        return self.Primero is None
+
+    def getList(self):
+        aux = self.Primero
+        while aux is not None:
+            print(aux.año)
+            aux = aux.next
+
+    def insertValue(self, semestre):
+        nuevo = NodoSemestre(semestre)
+        if self.isEmpty():
+            self.Primero = nuevo
+        else:
+            temp=self.Primero
+            while temp.next is not None:
+                temp = temp.next
+            temp.next=nuevo

@@ -1,7 +1,7 @@
 ¿Elements?
 
 ¿element type="user"? 
-    ¿item Carnet = "0201700886" $? 
+    ¿item Carnet = "201700886" $? 
     ¿item DPI = "3502451230508" $? 
     ¿item Nombre = "Emilia Miramontes" $? 
     ¿item Carrera = "Ingeniería en Ciencias y Sistemas" $? 
@@ -171,4 +171,5 @@
     ¿item Fecha = "2021/10/21" $? 
     ¿item Hora = "13:00" $? 
     ¿item Estado = "Pendiente" $?
-¿$element?¿$Elements?
+¿$element?
+¿$Elements?
