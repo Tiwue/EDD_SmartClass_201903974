@@ -194,7 +194,10 @@ string ListaTareas::generarCodigo(){
         texto=texto+" \n    ¿item Nombre = \""+aux->getTarea().getNombre()+"\" $?";
         texto=texto+" \n    ¿item Descripcion = \""+aux->getTarea().getDescripcion()+"\" $?";
         texto=texto+" \n    ¿item Materia = \""+aux->getTarea().getMateria()+"\" $?";
-        texto=texto+" \n    ¿item Fecha = \""+aux->getTarea().getFechaS()+"\" $?";
+        string dia=aux->getTarea().getFechaS().substr(8);
+        string mes=aux->getTarea().getFechaS().substr(5,2);
+        string ano=aux->getTarea().getFechaS().substr(0,4);
+        texto=texto+" \n    ¿item Fecha = \""+dia+"/"+mes+"/"+ano+"\" $?";
         texto=texto+" \n    ¿item Hora = \""+aux->getTarea().getHoraS()+"\" $?";
         texto=texto+" \n    ¿item Estado = \""+aux->getTarea().getEstado()+"\" $?";
         texto=texto+"\n¿$element?";
