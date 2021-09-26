@@ -21,7 +21,7 @@ class ListaAnalisis:
     def getList(self):
         aux = self.Primero
         while aux is not None:
-            print(aux.carnet + " - " + aux.nombre + "-" + aux.dpi + "-" + aux.descripcion + "-" + aux.correo)
+            print(aux.carnet + " - " + aux.nombre + "-" + aux.dpi + "-" + aux.descripcion + "-" + aux.fecha + "-" + aux.hora)
             aux = aux.next
 
     def insertValue(self, carnet, dpi, nombre, carrera, password, creditos, edad, correo, descripcion, materia, fecha, hora, estado):

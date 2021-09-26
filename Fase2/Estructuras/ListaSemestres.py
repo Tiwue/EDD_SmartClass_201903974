@@ -21,12 +21,28 @@ class ListaSemestres:
             print(aux.año)
             aux = aux.next
 
-    def insertValue(self, semestre):
-        nuevo = NodoSemestre(semestre)
-        if self.isEmpty():
-            self.Primero = nuevo
-        else:
-            temp=self.Primero
-            while temp.next is not None:
-                temp = temp.next
-            temp.next=nuevo
+    def add(self, semestre,curso):
+        if self.exist(semestre):
+            aux = self.Primero
+            while aux is not None:
+                if aux.semestre == semestre:
+                    aux.cursos.InsertarDatos(int(curso.codigo), curso)
+                aux = aux.next
+        else:    
+            nuevo = NodoSemestre(semestre)
+            nuevo.cursos.InsertarDatos(int(curso.codigo), curso)
+            if self.isEmpty():
+                self.Primero = nuevo
+            else:
+                temp=self.Primero
+                while temp.next is not None:
+                    temp = temp.next
+                temp.next=nuevo
+
+    def exist(self,semestre):
+        aux = self.Primero
+        while aux is not None:
+            if aux.semestre == semestre:
+                return True
+            aux = aux.next
+        return False            

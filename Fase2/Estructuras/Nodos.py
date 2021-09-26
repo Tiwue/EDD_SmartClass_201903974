@@ -1,3 +1,4 @@
+from Estructuras.ListaAños import ListaAños
 
 
 class NodoAnalisis:
@@ -55,6 +56,7 @@ class NodoAnalisisS:
 class NodoAVL:
     def __init__(self, estudiante):
         self.estudiante=estudiante
+        self.años=ListaAños()
         self.izq=None
         self.der=None
         self.altura=0

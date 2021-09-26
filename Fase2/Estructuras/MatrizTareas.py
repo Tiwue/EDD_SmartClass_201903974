@@ -1,5 +1,5 @@
 from Estructuras.Encabezado import listaEncabezado
-
+from Estructuras.ListaTareas import ListaTareas
 class NodoEncabezado:
 	def __init__(self, index):
 		self.index = index
@@ -8,8 +8,8 @@ class NodoEncabezado:
 		self.accesoNodo=None
 
 class Nodocelda:
-	def __init__(self, fila, columna, caracter):
-		self.caracter = caracter
+	def __init__(self, fila, columna):
+		self.tareas = ListaTareas()
 		self.fila = fila
 		self.columna = columna
 		self.arriba = None
@@ -23,33 +23,42 @@ class MatrizTareas:
         self.ecolumnas=listaEncabezado()
       
 
-    def add(self,fila, columna, caracter):
-        nuevo = Nodocelda(fila, columna, caracter)
-
+    def add(self,fila, columna, tarea):
+        nuevo = Nodocelda(fila, columna)
+        nuevo.tareas.add(tarea)
         encabezadoFilas=self.efilas.getEncabezado(fila)
         if encabezadoFilas == None:
             encabezadoFilas= NodoEncabezado(fila)
             encabezadoFilas.accesoNodo=nuevo
             self.efilas.setEncabezado(encabezadoFilas)
         else:
-            if int(nuevo.columna) < int(encabezadoFilas.accesoNodo.columna):
-                nuevo.derecha=encabezadoFilas.accesoNodo
-                encabezadoFilas.accesoNodo.izquierda=nuevo
-                encabezadoFilas.accesoNodo=nuevo
-            else:
-                actual=encabezadoFilas.accesoNodo
-                while actual.derecha!=None:
-                    if int(nuevo.columna) < int(actual.derecha.columna):
-                        nuevo.derecha=actual.derecha
-                        actual.derecha.izquierda =nuevo
-                        nuevo.izquierda = actual
-                        actual.derecha= nuevo
+            if self.existColumna(columna, encabezadoFilas.accesoNodo):
+                aux=encabezadoFilas.accesoNodo
+                while aux != None:
+                    if aux.columna ==columna:
+                        aux.tareas.add(tarea)
                         break
-                    actual=actual.derecha
+                    aux=aux.derecha
 
-                if actual.derecha == None:
-                    actual.derecha=nuevo
-                    nuevo.izquierda =actual           
+            else:    
+                if int(nuevo.columna) < int(encabezadoFilas.accesoNodo.columna):
+                    nuevo.derecha=encabezadoFilas.accesoNodo
+                    encabezadoFilas.accesoNodo.izquierda=nuevo
+                    encabezadoFilas.accesoNodo=nuevo
+                else:
+                    actual=encabezadoFilas.accesoNodo
+                    while actual.derecha!=None:
+                        if int(nuevo.columna) < int(actual.derecha.columna):
+                            nuevo.derecha=actual.derecha
+                            actual.derecha.izquierda =nuevo
+                            nuevo.izquierda = actual
+                            actual.derecha= nuevo
+                            break
+                        actual=actual.derecha
+
+                    if actual.derecha == None:
+                        actual.derecha=nuevo
+                        nuevo.izquierda =actual           
 
         encabezadoColumnas = self.ecolumnas.getEncabezado(columna)
         if encabezadoColumnas==None:
@@ -57,22 +66,46 @@ class MatrizTareas:
             encabezadoColumnas.accesoNodo=nuevo
             self.ecolumnas.setEncabezado(encabezadoColumnas)
         else:
-            if int(nuevo.fila) < int(encabezadoColumnas.accesoNodo.fila):
-                nuevo.abajo=encabezadoColumnas.accesoNodo
-                encabezadoColumnas.accesoNodo.arriba=nuevo
-                encabezadoColumnas.accesoNodo=nuevo
-            else:
-                actual = encabezadoColumnas.accesoNodo
-                while actual.abajo != None:
-                    if int(nuevo.fila) < int(actual.abajo.fila):
-                        nuevo.abajo = actual.abajo.fila
-                        nuevo.abajo = actual.abajo
-                        actual.abajo.arriba=nuevo
-                        nuevo.arriba = actual
-                        actual.abajo = nuevo
+            if self.existFila(fila, encabezadoFilas.accesoNodo):
+                aux=encabezadoFilas.accesoNodo
+                while aux != None:
+                    if aux.fila ==fila:
+                        aux.tareas.add(tarea)
                         break
-                    actual = actual.abajo
+                    aux=aux.abajo
 
-                if actual.abajo == None:
-                    actual.abajo=nuevo
-                    nuevo.arriba= actual
+            else:   
+
+                if int(nuevo.fila) < int(encabezadoColumnas.accesoNodo.fila):
+                    nuevo.abajo=encabezadoColumnas.accesoNodo
+                    encabezadoColumnas.accesoNodo.arriba=nuevo
+                    encabezadoColumnas.accesoNodo=nuevo
+                else:
+                    actual = encabezadoColumnas.accesoNodo
+                    while actual.abajo != None:
+                        if int(nuevo.fila) < int(actual.abajo.fila):
+                            nuevo.abajo = actual.abajo.fila
+                            nuevo.abajo = actual.abajo
+                            actual.abajo.arriba=nuevo
+                            nuevo.arriba = actual
+                            actual.abajo = nuevo
+                            break
+                        actual = actual.abajo
+
+                    if actual.abajo == None:
+                        actual.abajo=nuevo
+                        nuevo.arriba= actual
+
+    def existColumna(self,index, nodo):
+        while nodo != None:
+            if nodo.columna == index:
+                return True
+            nodo=nodo.derecha
+        return False
+
+    def existFila(self,index, nodo):
+        while nodo != None:
+            if nodo.fila == index:
+                return True
+            nodo=nodo.abajo
+        return False    

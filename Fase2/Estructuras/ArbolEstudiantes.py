@@ -65,3 +65,56 @@ class ArbolEstudiantes:
     def RDD(self, nodo):
         nodo.der = self.RI(nodo.der)
         return self.RD(nodo)
+
+    def buscar(self, carnet):
+        
+        if self.raiz is not None:
+            return self.buscar_inter(self.raiz, carnet)
+        else:
+            return None    
+
+    def buscar_inter(self, actual, carnet):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                return actual
+            elif int(carnet) < int(actual.estudiante.carnet):
+                return self.buscar_inter(actual.izq, carnet)
+            else:
+                return self.buscar_inter(actual.der, carnet)
+        else:
+            return None            
+
+    def cargarCurso(self, carnet, año, semestre, curso):
+        if self.raiz is not None:
+            self.cargarCursos_inter(self.raiz, carnet, año, semestre, curso)
+        else:
+            print("No hay estudiantes cargados al sistema")
+
+    def cargarCursos_inter(self, actual, carnet, año, semestre,curso):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                actual.estudiante.años.addCurso( año, semestre, curso)
+            elif int(carnet) < int(actual.estudiante.carnet):
+                self.cargarCursos_inter(actual.izq, carnet,año, semestre, curso)
+            else:
+                self.cargarCursos_inter(actual.der, carnet, año, semestre, curso)
+        else:
+            print("No se encontro un estudiante con este carnet")
+
+    def cargarTarea(self, carnet, año, mes, hora, dia, tarea):
+        if self.raiz is not None:
+            self.cargarTarea_inter(self.raiz, carnet, año, mes, hora, dia, tarea)
+        else:
+            print("No hay estudiantes cargados al sistema")
+
+    def cargarTarea_inter(self, actual, carnet, año, mes, hora,dia, tarea):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                actual.estudiante.años.addTarea( año, mes, hora , dia , tarea)
+            elif int(carnet) < int(actual.estudiante.carnet):
+                self.cargarTarea_inter(actual.izq, carnet,año, mes, hora, dia, tarea)
+            else:
+                self.cargarTarea_inter(actual.der, carnet, año, mes, hora, dia, tarea)
+        else:
+            print("No se encontro un estudiante con este carnet")            
+            

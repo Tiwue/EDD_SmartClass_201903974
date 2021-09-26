@@ -9,4 +9,9 @@ class Tarea:
         self.estado = estado
         self.mes = mes 
         self.dia = dia 
-        self.hora = hora 
+        self.hora = hora
+
+    def toString(self):
+        cadena="Nombre: "+ self.nombre+"\nCarnet: "+self.carnet+"\nDescripcion: "+self.descripcion+"\nMateria: "+self.materia+"\nFecha: "+ self.fecha +"\nHora: "+self.hora
+        return cadena
+           

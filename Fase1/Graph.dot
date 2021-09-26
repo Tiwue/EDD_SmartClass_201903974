@@ -1,0 +1,8 @@
+digraph List {rankdir=LR;node [shape = box3d, color=blue , style=filled, fillcolor=lightgray];
+entrada[shape=larrow ]
+salida[shape=larrow]
+salida->Node1
+Node1[label="ID:1\nTipo: Tarea\nDescripcion: La hora indicada no es permitida en el rango establecido\nIdentificador: 989"];
+
+Node1->entrada[arrowhead=none]
+}

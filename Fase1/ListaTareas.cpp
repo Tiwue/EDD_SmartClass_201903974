@@ -28,6 +28,7 @@ int ListaTareas::getSize(){
     }
 
 
+
 void ListaTareas::insertar(Tarea tarea_){
 
     NodoTarea *newNodo = new NodoTarea(tarea_);
@@ -208,4 +209,12 @@ string ListaTareas::generarCodigo(){
     return texto;
 
 
+}
+
+string invertirFecha(string str){
+    if (str.length() == 1) {
+        return str;
+    }else{
+        return invertirFecha(str.substr(1,str.length())) + str.at(0);
+    }
 }

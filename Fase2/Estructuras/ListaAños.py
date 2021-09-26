@@ -23,12 +23,46 @@ class ListaAños:
             print(aux.año)
             aux = aux.Next
 
-    def insertValue(self, año):
-        nuevo = NodoAño(año)
-        if self.isEmpty():
-            self.Ultimo = nuevo
-            self.Primero = self.Ultimo
-        else:
-            self.Ultimo.Next = nuevo
-            nuevo.Previous = self.Ultimo
-            self.Ultimo = nuevo
+    def addTarea(self, año,mes, hora, dia, tarea):
+        if self.exist(año):
+            aux = self.Primero
+            while aux is not None:
+                if aux.año == año:
+                    aux.meses.add(mes, hora, dia,tarea)
+                aux = aux.next
+        else:    
+            nuevo = NodoAño(año)
+            nuevo.meses.add(mes, hora, dia,tarea)
+            if self.isEmpty():
+                self.Ultimo = nuevo
+                self.Primero = self.Ultimo
+            else:
+                self.Ultimo.Next = nuevo
+                nuevo.Previous = self.Ultimo
+                self.Ultimo = nuevo
+
+    def addCurso(self, año, semestre, curso):
+        if self.exist(año):
+            aux = self.Primero
+            while aux is not None:
+                if aux.año == año:
+                    aux.semestres.add(semestre, curso)
+                aux = aux.next
+        else:    
+            nuevo = NodoAño(año)
+            nuevo.semestres.add(semestre, curso)
+            if self.isEmpty():
+                self.Ultimo = nuevo
+                self.Primero = self.Ultimo
+            else:
+                self.Ultimo.Next = nuevo
+                nuevo.Previous = self.Ultimo
+                self.Ultimo = nuevo
+
+    def exist(self,año):
+        aux = self.Primero
+        while aux is not None:
+            if aux.año == año:
+                return True
+            aux = aux.next
+        return False               

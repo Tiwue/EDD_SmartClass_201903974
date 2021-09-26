@@ -1,8 +1,6 @@
 from Estructuras.NodoMes import NodoMes
 
 
-
-
 class ListaMeses:
     def __init__(self):
         self.Primero = None
@@ -13,7 +11,7 @@ class ListaMeses:
         contador = 0
         while aux is not None:
             contador += 1
-            aux = aux.Next()
+            aux = aux.next
 
         return contador
 
@@ -24,14 +22,30 @@ class ListaMeses:
         aux = self.Primero
         while aux is not None:
             print(aux.año)
-            aux = aux.Next
+            aux = aux.next
 
-    def insertValue(self, mes):
-        nuevo = NodoMes(mes)
-        if self.isEmpty():
-            self.Ultimo = nuevo
-            self.Primero = self.Ultimo
-        else:
-            self.Ultimo.Next = nuevo
-            nuevo.Previous = self.Ultimo
-            self.Ultimo = nuevo
+    def add(self, mes,hora, dia, tarea):
+        if self.exist(mes):
+            aux = self.Primero
+            while aux is not None:
+                if aux.mes == mes:
+                    aux.tareas.add(hora, dia,tarea)
+                aux = aux.next
+        else:    
+            nuevo = NodoMes(mes)
+            nuevo.tareas.add(hora,dia,tarea)
+            if self.isEmpty():
+                self.Ultimo = nuevo
+                self.Primero = self.Ultimo
+            else:
+                self.Ultimo.Next = nuevo
+                nuevo.Previous = self.Ultimo
+                self.Ultimo = nuevo
+
+    def exist(self,mes):
+        aux = self.Primero
+        while aux is not None:
+            if aux.mes == mes:
+                return True
+            aux = aux.next
+        return False    

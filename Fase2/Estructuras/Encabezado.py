@@ -33,3 +33,5 @@ class listaEncabezado:
                 return actual
             actual=actual.siguiente
         return None
+
+    
