@@ -67,10 +67,10 @@ class ArbolCursos:
             while auxContador!=raiz.Cuenta:
                 if codigo==raiz.getCodigo(auxContador):
                     self.comparador=True
-                ++auxContador 
+                auxContador +=1 
             auxContador=raiz.Cuenta
             while codigo<raiz.getCodigo(auxContador-1) and auxContador>1:
-                --auxContador
+                auxContador -=1
                 if codigo==raiz.getCodigo(auxContador-1):
                     self.estado=True
                 else:

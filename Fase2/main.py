@@ -1,15 +1,18 @@
+from Estructuras.ArbolCursos import ArbolCursos
 from flask import Flask, request, jsonify
 import os
 from analizador.sintactico import parser
 from analizador.sintactico import usuarios_Lista, tareas_Lista
-app=Flask(__name__)
-ruta=os.getcwd()
 from Estructuras.ArbolEstudiantes import ArbolEstudiantes
 from Estructuras.Estudiante import Estudiante
 from Estructuras.Curso import Curso
 from Estructuras.Tarea import Tarea
-Estudiantes= ArbolEstudiantes()
 
+app=Flask(__name__)
+ruta=os.getcwd()
+
+Estudiantes= ArbolEstudiantes()
+Pensum=ArbolCursos()
 @app.route("/",methods=["GET"])
 def inicio():
     return jsonify({"mensaje":"Server levantado :)"})
@@ -44,12 +47,6 @@ def carga():
             tarea1 = Tarea(temp.nombre,temp.carnet,temp.descripcion,temp.materia,temp.fecha,temp.hora,temp.Estado,int(mes2),int(dia2))
             Estudiantes.cargarTarea(temp.carnet,int(año2),int(mes2),int(hora2),int(dia2),tarea1)
             temp = temp.next
-    tareas_Lista.getList()
-
-    print("---------------------")
-
-    usuarios_Lista.getList()
-
     return jsonify({"mensaje":"Archivo leido :)"})
 
 @app.route("/cursosEstudiante", methods=["POST"])
@@ -59,12 +56,23 @@ def cargaCursos():
         for j in i["Años"]:
             for k in j["Semestres"]:
                 for l in k["Cursos"]:
-                    curso1 = Curso(l["Codigo"], l["Nombre"], l["Creditos"], l["Prerequisitos"], l["Obligatorio"])
-                    Estudiantes.cargarCurso(i["Carnet"],j["Año"],k["Semestre"], curso1)
+                    curso1 = Curso(int(l["Codigo"]), l["Nombre"], l["Creditos"], l["Prerequisitos"], l["Obligatorio"])
+                    Estudiantes.cargarCurso(i["Carnet"],int(j["Año"]),int(k["Semestre"]), curso1)
 
+    return jsonify({"mensaje":"Json leido :)"})
+
+
+@app.route("/cursosPensum", methods=["POST"])
+def cargaPensum():
+    datos=request.get_json()
+    for i in datos["Cursos"]:
+        curso1=Curso(int(i["Codigo"]), i["Nombre"], i["Creditos"], i["Prerequisitos"], i["Obligatorio"])
+        Pensum.InsertarDatos(int(i["Codigo"]), curso1)
     return jsonify({"mensaje":"Json leido :)"})
 
 if __name__ == "__main__":
     app.run(port=3000)    
+
+
 
 #"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\codigo.txt"

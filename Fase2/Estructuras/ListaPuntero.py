@@ -14,7 +14,7 @@ class ListaPuntero:
 
     def InsertarPuntero(self, puntero):
         nuevo = NodoPuntero(puntero)
-        if self.Cuenta<5:
+        if self.cuenta<5:
             if self.isEmpty():
                 self.Primero=nuevo
                 self.Ultimo=self.Primero

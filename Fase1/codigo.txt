@@ -105,7 +105,7 @@
     ¿item Nombre = "Tarea de Matematica" $? 
     ¿item Descripcion = "Realizar la tarea del curso de matemática intermedia 1." $? 
     ¿item Materia = "Matemática Intermedia 1" $? 
-    ¿item Fecha = "2021/07/01" $? 
+    ¿item Fecha = "01/07/2021" $? 
     ¿item Hora = "8:00" $? 
     ¿item Estado = "Incumplido" $?
 ¿$element?
@@ -114,7 +114,7 @@
     ¿item Nombre = "Tarea de Fisica" $? 
     ¿item Descripcion = "Realizar la tarea del curso de Física 1." $? 
     ¿item Materia = "Física 1" $? 
-    ¿item Fecha = "2021/07/01" $? 
+    ¿item Fecha = "01/07/2021" $? 
     ¿item Hora = "11:00" $? 
     ¿item Estado = "Pendiente" $?
 ¿$element?
@@ -123,7 +123,7 @@
     ¿item Nombre = "Tarea de Estadística" $? 
     ¿item Descripcion = "Realizar la tarea del curso de Estadística 1." $? 
     ¿item Materia = "Estadística 1" $? 
-    ¿item Fecha = "2021/07/14" $? 
+    ¿item Fecha = "14/07/2021" $? 
     ¿item Hora = "10:00" $? 
     ¿item Estado = "Cumplido" $?
 ¿$element?
@@ -132,7 +132,7 @@
     ¿item Nombre = "Codificar en C++" $? 
     ¿item Descripcion = "Realizar la tarea del curso de Estructuras de datos" $? 
     ¿item Materia = "Estructuras de Datos" $? 
-    ¿item Fecha = "2021/07/14" $? 
+    ¿item Fecha = "14/07/2021" $? 
     ¿item Hora = "16:00" $? 
     ¿item Estado = "Pendiente" $?
 ¿$element?
@@ -141,7 +141,7 @@
     ¿item Nombre = "Tarea de Lógica" $? 
     ¿item Descripcion = "Realizar el resumen del curso de Lógica." $? 
     ¿item Materia = "Lógica" $? 
-    ¿item Fecha = "2021/10/04" $? 
+    ¿item Fecha = "04/10/2021" $? 
     ¿item Hora = "9:00" $? 
     ¿item Estado = "Pendiente" $?
 ¿$element?
@@ -150,7 +150,7 @@
     ¿item Nombre = "Tarea 2 de Física 3" $? 
     ¿item Descripcion = "Realizar la tarea del curso de Física 3." $? 
     ¿item Materia = "FÍsica 3" $? 
-    ¿item Fecha = "2021/10/04" $? 
+    ¿item Fecha = "04/10/2021" $? 
     ¿item Hora = "11:00" $? 
     ¿item Estado = "Pendiente" $?
 ¿$element?
@@ -159,7 +159,7 @@
     ¿item Nombre = "Proyecto de Lenguajes" $? 
     ¿item Descripcion = "Realizar el proyecto del curso de Lenguajes" $? 
     ¿item Materia = "Lenguajes Formales y de Programación" $? 
-    ¿item Fecha = "2021/10/21" $? 
+    ¿item Fecha = "21/10/2021" $? 
     ¿item Hora = "13:00" $? 
     ¿item Estado = "Pendiente" $?
 ¿$element?¿$Elements?

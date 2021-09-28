@@ -55,7 +55,7 @@ class ListaAños:
                 self.Ultimo = nuevo
                 self.Primero = self.Ultimo
             else:
-                self.Ultimo.Next = nuevo
+                self.Ultimo.next = nuevo
                 nuevo.Previous = self.Ultimo
                 self.Ultimo = nuevo
 
