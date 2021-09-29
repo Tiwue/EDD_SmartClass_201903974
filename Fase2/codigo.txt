@@ -1,5 +1,4 @@
 ¿Elements?
-
 ¿element type="user"? 
     ¿item Carnet = "201700886" $? 
     ¿item DPI = "3502451230508" $? 

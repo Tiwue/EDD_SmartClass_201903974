@@ -22,11 +22,31 @@ class ListaTareas:
             aux = aux.siguiente
 
     def add(self, tarea):
-        nuevo = NodoTarea(tarea)
+        if not self.exist(tarea):
+            nuevo = NodoTarea(tarea)
+            if self.isEmpty():
+                self.Primero=nuevo
+            else:
+                aux=self.Primero
+                while aux.siguiente is not None:
+                    aux = aux.siguiente
+                aux.siguiente=nuevo
+
+    def length(self):
+        counter=0
         if self.isEmpty():
-            self.Primero=nuevo
+            return counter
         else:
             aux=self.Primero
-            while aux.siguiente is not None:
+            while aux != None:
+                counter += 1
                 aux = aux.siguiente
-            aux.siguiente=nuevo
+            return counter
+
+    def exist(self, tarea):
+        aux = self.Primero
+        while aux is not None:
+            if aux.tarea.descripcion == tarea.descripcion and aux.tarea.materia == tarea.materia:
+                return True
+            aux = aux.siguiente
+        return False                

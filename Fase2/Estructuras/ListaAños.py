@@ -65,4 +65,14 @@ class ListaAños:
             if aux.año == año:
                 return True
             aux = aux.next
-        return False               
+        return False
+
+    def graficarMatriz(self, año, mes):
+        if self.exist(año):
+            aux = self.Primero
+            while aux is not None:
+                if aux.año == año:
+                    return aux.meses.graficarMatriz(mes)
+                aux = aux.next
+        else:    
+            return "no existe el año solicitado para graficar la matriz"            

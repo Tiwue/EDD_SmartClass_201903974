@@ -1,5 +1,5 @@
 from Estructuras.Nodos import NodoAVL
-
+from graphviz import Source
 class ArbolEstudiantes:
 
     def __init__(self):
@@ -119,5 +119,41 @@ class ArbolEstudiantes:
             print("No se encontro un estudiante con este carnet")
 
 
+    def graficar(self):
+            cadena='digraph G {rankdir="TB"\n node [margin=0.3 fontcolor=black  width=0.5 fontname="Comic Sans MS" shape=box3d style=filled]\n'
+            if self.raiz is not None:
+                cadena= self.graficar_inter(self.raiz, cadena)
+            else:
+                cadena += '"Aun no se cargan Estudiantes"'
+            cadena += "}"
+            s = Source(cadena, filename="Estudiantes",directory='C:\\Users\\steve\\Desktop\\Reportes_F2',format='pdf') 
+            s.view()
 
-            
+
+    def graficar_inter(self, actual, cadena):        
+        if actual is not None:
+            cadena += actual.estudiante.carnet+'[fillcolor=gray84 label="'+actual.estudiante.carnet+"\\n"  +actual.estudiante.nombre+"\\n"+actual.estudiante.carrera+'"]\n'
+            if actual.izq != None:
+                cadena += actual.estudiante.carnet+"->"+actual.izq.estudiante.carnet+"\n"
+                cadena = self.graficar_inter(actual.izq, cadena)
+            if actual.der != None:
+                cadena += actual.estudiante.carnet + "->"+ actual.der.estudiante.carnet+"\n"
+                cadena = self.graficar_inter(actual.der, cadena )
+        return cadena
+
+    def graficarMatriz(self,carnet, año, mes):
+        if self.raiz is not None:
+            return self.graficarMatriz_inter(self.raiz, carnet, año, mes)
+        else:
+            return "No hay estudiantes cargados al sistema"
+
+    def graficarMatriz_inter(self, actual, carnet, año, mes):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                return actual.estudiante.años.graficarMatriz(año,mes)
+            elif int(carnet) < int(actual.estudiante.carnet):
+                return self.graficarMatriz_inter(actual.izq, carnet,año,mes)
+            else:
+                return self.graficarMatriz_inter(actual.der, carnet, año, mes)
+        else:
+            return "No existe un estudiante con ese carnet"          

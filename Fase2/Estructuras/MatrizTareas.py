@@ -1,5 +1,6 @@
 from Estructuras.Encabezado import listaEncabezado
 from Estructuras.ListaTareas import ListaTareas
+from graphviz import Source
 class NodoEncabezado:
 	def __init__(self, index):
 		self.index = index
@@ -66,8 +67,8 @@ class MatrizTareas:
             encabezadoColumnas.accesoNodo=nuevo
             self.ecolumnas.setEncabezado(encabezadoColumnas)
         else:
-            if self.existFila(fila, encabezadoFilas.accesoNodo):
-                aux=encabezadoFilas.accesoNodo
+            if self.existFila(fila, encabezadoColumnas.accesoNodo):
+                aux=encabezadoColumnas.accesoNodo
                 while aux != None:
                     if aux.fila ==fila:
                         aux.tareas.add(tarea)
@@ -108,4 +109,65 @@ class MatrizTareas:
             if nodo.fila == index:
                 return True
             nodo=nodo.abajo
-        return False    
+        return False
+
+    def graficar(self, mes):
+            cadena='graph grid{ layout=dot label="Recordatorios" labelloc = "t" node [shape=filled style="filled"];\n edge[style="dashed", weight=1000];\n Mt[ label = "Mes:'+str(mes)+'", fillcolor = firebrick1, group=0];\n'
+            aux1=self.ecolumnas.primero
+            while aux1 != None:
+                cadena += "D"+str(aux1.index)+'[label="Dia '+ str(aux1.index)+'", group='+str(aux1.index)+'];\n'
+                aux1=aux1.siguiente
+            aux2=self.efilas.primero
+            while aux2 != None:
+                cadena += "H"+str(aux2.index)+'[label="Hora '+ str(aux2.index) + ':00", group=0];\n'
+                aux3=aux2.accesoNodo
+                while aux3 != None:
+                    cadena += "H"+str(aux3.fila)+"D"+str(aux3.columna)+'[label="'+str(aux3.tareas.length())+'", group='+str(aux3.columna)+']\n'
+                    aux3=aux3.derecha
+                aux2=aux2.siguiente
+
+            aux8=self.efilas.primero
+            cadena += "Mt --H"+str(aux8.index)
+            aux8=aux8.siguiente 
+            while aux8 != None:
+                cadena +=" -- H"+str(aux8.index)
+                aux8= aux8.siguiente
+            cadena+="\n"
+
+            aux4=self.ecolumnas.primero
+            while aux4 != None:
+                cadena += "D"+str(aux4.index)
+                aux5=aux4.accesoNodo
+                while aux5 != None:
+                    cadena += " -- H"+str(aux5.fila)+"D"+str(aux5.columna)
+                    aux5=aux5.abajo
+                cadena += "\n"    
+                aux4=aux4.siguiente
+            
+            aux8=self.ecolumnas.primero
+            cadena += "rank=same {Mt--D"+str(aux8.index)
+            aux8=aux8.siguiente 
+            while aux8 != None:
+                cadena +=" -- D"+str(aux8.index)
+                aux8= aux8.siguiente
+            cadena+="}\n"
+
+            aux6=self.efilas.primero
+            while aux6 != None:
+                cadena += "	rank=same { H"+str(aux6.index)
+                aux7=aux6.accesoNodo
+                while aux7 != None:
+                    cadena += " -- H"+str(aux7.fila)+"D"+str(aux7.columna)
+                    aux7=aux7.derecha
+                cadena += "}\n"    
+                aux6=aux6.siguiente
+        
+
+            cadena +="}"
+            s = Source(cadena, filename="Matriz",directory='C:\\Users\\steve\\Desktop\\Reportes_F2',format='pdf') 
+            s.view()
+            return "Matriz graficada exitosamente"        
+
+
+
+

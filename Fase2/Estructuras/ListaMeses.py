@@ -48,4 +48,14 @@ class ListaMeses:
             if aux.mes == mes:
                 return True
             aux = aux.next
-        return False    
+        return False
+
+    def graficarMatriz(self, mes):
+        if self.exist(mes):
+            aux = self.Primero
+            while aux is not None:
+                if aux.mes == mes:
+                    return aux.tareas.graficar(mes)
+                aux = aux.next
+        else:    
+            return "No hay recordatorios para el mes solicitado"

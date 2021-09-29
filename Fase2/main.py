@@ -1,5 +1,5 @@
 from Estructuras.ArbolCursos import ArbolCursos
-from flask import Flask, request, jsonify
+from flask import Flask, json, request, jsonify
 import os
 from analizador.sintactico import parser
 from analizador.sintactico import usuarios_Lista, tareas_Lista
@@ -70,9 +70,18 @@ def cargaPensum():
         Pensum.InsertarDatos(int(i["Codigo"]), curso1)
     return jsonify({"mensaje":"Json leido :)"})
 
+@app.route("/reporte", methods=["POST"])
+def graficar():
+    respuesta=""
+    datos=request.get_json()
+    if datos["tipo"]==0:
+        Estudiantes.graficar()
+    
+    elif datos["tipo"]==1:
+        respuesta=Estudiantes.graficarMatriz(datos["carnet"],int(datos["año"]), int(datos["mes"]))
+    return jsonify({"Mensaje":respuesta})    
+
 if __name__ == "__main__":
     app.run(port=3000)    
-
-
 
 #"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\codigo.txt"
