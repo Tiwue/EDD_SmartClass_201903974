@@ -59,3 +59,13 @@ class ListaMeses:
                 aux = aux.next
         else:    
             return "No hay recordatorios para el mes solicitado"
+
+    def graficarLista(self, mes,dia,hora):
+        if self.exist(mes):
+            aux = self.Primero
+            while aux is not None:
+                if aux.mes == mes:
+                    return aux.tareas.graficarLista(mes, dia,hora)
+                aux = aux.next
+        else:    
+            return "No hay recordatorios para el mes solicitado"        

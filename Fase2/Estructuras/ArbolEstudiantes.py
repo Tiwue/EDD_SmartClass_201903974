@@ -25,7 +25,7 @@ class ArbolEstudiantes:
         else:
             if int(estudiante.carnet)< int(raiz.estudiante.carnet):
                 raiz.izq = self.insert_inter(estudiante, raiz.izq)
-                if self.altura(raiz.der)-self.altura(raiz.izq)==-2:
+                if (self.altura(raiz.der)-self.altura(raiz.izq))==-2:
                     if int(estudiante.carnet)<int(raiz.izq.estudiante.carnet):
                         raiz = self.RI(raiz)
                     else:
@@ -33,7 +33,7 @@ class ArbolEstudiantes:
             elif int(estudiante.carnet)> int(raiz.estudiante.carnet):            
                 raiz.der = self.insert_inter(estudiante,raiz.der)
                 if self.altura(raiz.der)-self.altura(raiz.izq)==2:
-                    if int(estudiante.carnet) > int(raiz.izq.estudiante.carnet):
+                    if int(estudiante.carnet) > int(raiz.der.estudiante.carnet):
                         raiz = self.RD(raiz)
                     else:
                         raiz = self.RDD(raiz)
@@ -156,4 +156,21 @@ class ArbolEstudiantes:
             else:
                 return self.graficarMatriz_inter(actual.der, carnet, año, mes)
         else:
-            return "No existe un estudiante con ese carnet"          
+            return "No existe un estudiante con ese carnet"
+
+    def graficarLista(self,carnet, año, mes, dia, hora):
+        if self.raiz is not None:
+            return self.graficarLista_inter(self.raiz, carnet, año, mes, dia, hora)
+        else:
+            return "No hay estudiantes cargados al sistema"
+
+    def graficarLista_inter(self, actual, carnet, año, mes, dia, hora):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                return actual.estudiante.años.graficarLista(año,mes,dia,hora)
+            elif int(carnet) < int(actual.estudiante.carnet):
+                return self.graficarLista_inter(actual.izq, carnet,año,mes,dia,hora)
+            else:
+                return self.graficarLista_inter(actual.der, carnet, año, mes,dia,hora)
+        else:
+            return "No existe un estudiante con ese carnet"                  

@@ -34,4 +34,14 @@ class listaEncabezado:
             actual=actual.siguiente
         return None
 
+    def exist(self,index):
+        actual=self.primero
+        while actual != None:
+            if actual.index == index:
+                return True
+            actual=actual.siguiente
+        return None
+
+
+
     

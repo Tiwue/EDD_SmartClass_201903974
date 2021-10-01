@@ -76,9 +76,11 @@ def graficar():
     datos=request.get_json()
     if datos["tipo"]==0:
         Estudiantes.graficar()
-    
+        respuesta="Arbol generado"
     elif datos["tipo"]==1:
         respuesta=Estudiantes.graficarMatriz(datos["carnet"],int(datos["año"]), int(datos["mes"]))
+    elif datos["tipo"]==2:
+        respuesta=Estudiantes.graficarLista(datos["carnet"], int(datos["año"]), int(datos["mes"]),int(datos["dia"]), int(datos["hora"]))
     return jsonify({"Mensaje":respuesta})    
 
 if __name__ == "__main__":

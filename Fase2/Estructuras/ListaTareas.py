@@ -1,4 +1,4 @@
-
+from graphviz import Source
 
 class NodoTarea:
     def __init__(self, tarea):
@@ -49,4 +49,20 @@ class ListaTareas:
             if aux.tarea.descripcion == tarea.descripcion and aux.tarea.materia == tarea.materia:
                 return True
             aux = aux.siguiente
-        return False                
+        return False
+
+    def graficar(self):
+        
+        cadena='digraph G { label="RECORDATORIOS" labelloc="t" gradientangle=0 rankdir="LR" node[shape=note ] edge[dir=both, arrowhead=vee, arrowtail=vee];\n'
+        aux=self.Primero
+        contador=0
+        while aux != None:
+            contador +=1
+            cadena += "nodo"+str(contador)+'[label="Carnet: '+str(aux.tarea.carnet)+'\\n'+'Nombre: '+aux.tarea.nombre+"\\nDescripcion: "+aux.tarea.materia+'\\nFecha: '+aux.tarea.fecha+"\\nHora: "+aux.tarea.hora+"\\nEstado: "+aux.tarea.estado+'" color="darkgray" ];\n'
+            if aux.siguiente !=None:
+                cadena +="nodo"+str(contador)+"->"+"nodo"+str(contador+1)+"\n"
+            aux=aux.siguiente
+        cadena +="}\n"    
+        s=Source(cadena, filename="Lista Tareas",directory='C:\\Users\\steve\\Desktop\\Reportes_F2',format='pdf')
+        s.view()
+        return "Lista graficada con exito"

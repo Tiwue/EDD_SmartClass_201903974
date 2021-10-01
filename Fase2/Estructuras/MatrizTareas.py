@@ -112,7 +112,7 @@ class MatrizTareas:
         return False
 
     def graficar(self, mes):
-            cadena='graph grid{ layout=dot label="Recordatorios" labelloc = "t" node [shape=filled style="filled"];\n edge[style="dashed", weight=1000];\n Mt[ label = "Mes:'+str(mes)+'", fillcolor = firebrick1, group=0];\n'
+            cadena='graph grid{ layout=dot label="Recordatorios" labelloc = "t" node [shape=filled style="filled"];\n edge[dir=both style="solid", weight=1000];\n Mt[ label = "Mes:'+str(mes)+'", fillcolor = firebrick1, group=0];\n'
             aux1=self.ecolumnas.primero
             while aux1 != None:
                 cadena += "D"+str(aux1.index)+'[label="Dia '+ str(aux1.index)+'", group='+str(aux1.index)+'];\n'
@@ -168,6 +168,20 @@ class MatrizTareas:
             s.view()
             return "Matriz graficada exitosamente"        
 
+    def graficarLista(self, mes, columna, fila):
+        if self.efilas.exist(fila):
+            aux=self.efilas.primero
+            while aux !=None:
+                if aux.index == fila:
+                   aux2=aux.accesoNodo
+                   while aux2!=None:
+                       if aux2.columna == columna:
+                           return aux2.tareas.graficar()
+                       aux2=aux2.derecha
+                aux=aux.siguiente               
+            return "No existen recordatorios para el dia y hora solicitado"
+        else:
+            return "No existen recordatorios para el mes solicitado"
 
 
 
