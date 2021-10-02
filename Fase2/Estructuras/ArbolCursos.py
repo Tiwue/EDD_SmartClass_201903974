@@ -1,4 +1,5 @@
 from Estructuras.PaginaB import PaginaB
+from graphviz import Source
 class ArbolCursos:
     def __init__(self):
         self.Raiz=None
@@ -170,13 +171,71 @@ class ArbolCursos:
                     if pagina.getCodigo(i)!=None:
                         if pagina.getCodigo(i)==codigo:
                             self.curso= pagina.getCurso(i)
-            
-            
-           
-            
             self.getCursoM(pagina.getApuntador(0),codigo)
             self.getCursoM(pagina.getApuntador(1),codigo)
             self.getCursoM(pagina.getApuntador(2),codigo)
             self.getCursoM(pagina.getApuntador(3),codigo)
             self.getCursoM(pagina.getApuntador(4),codigo)
             
+    def Graficar(self, tipo):
+        
+        self.grafica="digraph ArbolB{\n"
+        self.grafica+="\nrankdir=TB;\n"
+        self.grafica+="node[color=\"greenyellow\",style=\"rounded,filled\",fillcolor=lightcyan3, shape=record];\n"
+        self.Graficar2(self.Raiz)
+        self.Graficar3(self.Raiz)
+        self.grafica+="\n}\n"
+        s = Source(self.grafica, filename=("Cursos"+tipo),directory='C:\\Users\\steve\\Desktop\\Reportes_F2',format='pdf') 
+        s.view()
+        return "Arbol Pensum graficado exitosamente"
+    
+    def Graficar2(self, pagina):
+        contador=0
+        if pagina!=None:
+            self.nodos=0
+            for i in range(0,pagina.Cuenta):
+                if pagina.getCodigo(i)!=None:
+                    if pagina.getCodigo(i)!="":
+                        self.nodos+=1
+                        if i!=0:
+                            self.grafica+="|"
+                        if self.nodos==1:
+                            self.grafica+="\nNodo"+str(pagina.getCodigo(i))+"[label=\"<f0> |"
+                        if i==0:
+                            self.grafica+="<f"+str(i+1)+">"+str(pagina.getCodigo(i))+"\\n"+pagina.getCurso(i).nombre + "|<f"+str(i+2)+"> "
+                            contador=3
+                        else:
+                            self.grafica+="<f"+str(contador)+">"+str(pagina.getCodigo(i))+"\\n"+pagina.getCurso(i).nombre + "|<f"+str(contador+1)+"> "
+                            contador+=2
+                        
+                        if i==pagina.Cuenta-1:
+                            contador=0;
+                            self.grafica+=" \",group=0];\n"
+
+            self.Graficar2(pagina.getApuntador(0))
+            self.Graficar2(pagina.getApuntador(1))
+            self.Graficar2(pagina.getApuntador(2))
+            self.Graficar2(pagina.getApuntador(3))
+            self.Graficar2(pagina.getApuntador(4))
+    
+    def Graficar3(self, pagina):
+        if pagina!=None: 
+            if pagina.getCodigo(0)!=None:
+                    if pagina.getCodigo(0)!="":
+                        if pagina.getApuntador(0)!=None and pagina.getApuntador(0).getCodigo(0)!=None:
+                                self.grafica+="\nNodo"+str(pagina.getCodigo(0))+":f0->"+"Nodo"+str(pagina.getApuntador(0).getCodigo(0))
+                        if pagina.getApuntador(1)!=None and pagina.getApuntador(1).getCodigo(0)!=None:
+                                self.grafica+="\nNodo"+str(pagina.getCodigo(0))+":f2->"+"Nodo"+str(pagina.getApuntador(1).getCodigo(0))
+                        if pagina.getApuntador(2)!=None and pagina.getApuntador(2).getCodigo(0)!=None:
+                                self.grafica+="\nNodo"+str(pagina.getCodigo(0))+":f4->"+"Nodo"+str(pagina.getApuntador(2).getCodigo(0))
+                        if pagina.getApuntador(3)!=None and pagina.getApuntador(3).getCodigo(0)!=None:
+                                self.grafica+="\nNodo"+str(pagina.getCodigo(0))+":f6->"+"Nodo"+str(pagina.getApuntador(3).getCodigo(0))
+                        if pagina.getApuntador(4)!=None and pagina.getApuntador(4).getCodigo(0)!=None:
+                                self.grafica+="\nNodo"+str(pagina.getCodigo(0))+":f8->"+"Nodo"+str(pagina.getApuntador(4).getCodigo(0))
+
+            self.Graficar3(pagina.getApuntador(0))
+            self.Graficar3(pagina.getApuntador(1))
+            self.Graficar3(pagina.getApuntador(2))
+            self.Graficar3(pagina.getApuntador(3))
+            self.Graficar3(pagina.getApuntador(4))
+   

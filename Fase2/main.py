@@ -92,6 +92,9 @@ def graficar():
         respuesta=Estudiantes.graficarMatriz(datos["carnet"],int(datos["año"]), int(datos["mes"]))
     elif datos["tipo"]==2:
         respuesta=Estudiantes.graficarLista(datos["carnet"], int(datos["año"]), int(datos["mes"]),int(datos["dia"]), int(datos["hora"]))
+    elif datos["tipo"]==3:
+        respuesta = Pensum.Graficar("Pensum")
+
     return jsonify({"Mensaje":respuesta})    
 
 if __name__ == "__main__":
