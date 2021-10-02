@@ -55,7 +55,7 @@ def p_item(t):
     if t[3].lower() == "carnet":
         nodo_elemento.carnet = t[5].replace('"', '').strip()
     elif t[3].lower() == "dpi":
-        nodo_elemento.DPI = t[5].replace('"', '').strip()
+        nodo_elemento.dpi = t[5].replace('"', '').strip()
     elif t[3].lower() == "nombre":
         nodo_elemento.nombre = t[5].replace('"', '').strip()
     elif t[3].lower() == "carrera":
