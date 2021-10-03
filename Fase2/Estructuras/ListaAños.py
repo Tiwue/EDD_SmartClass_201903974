@@ -85,4 +85,15 @@ class ListaAños:
                     return aux.meses.graficarLista(mes,dia,hora)
                 aux = aux.next
         else:    
-            return "no existe el año solicitado para graficar la matriz"                   
+            return "no existe el año solicitado para graficar la matriz"
+
+    def graficarCursos(self, año, semestre,tipo):
+        if self.exist(año):
+            aux = self.Primero
+            while aux is not None:
+                if aux.año == año:
+                    return aux.semestres.graficarCursos(semestre,tipo)
+                aux = aux.next
+        else:    
+            return "no existe el año solicitado para graficar los cursos"          
+                               

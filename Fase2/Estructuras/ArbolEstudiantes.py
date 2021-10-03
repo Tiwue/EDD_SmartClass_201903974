@@ -174,3 +174,23 @@ class ArbolEstudiantes:
                 return self.graficarLista_inter(actual.der, carnet, año, mes,dia,hora)
         else:
             return "No existe un estudiante con ese carnet"                  
+
+
+    def graficarCursos(self,carnet, año, semestre, tipo):
+        if self.raiz is not None:
+            return self.graficarCursos_inter(self.raiz, carnet, año, semestre, tipo)
+        else:
+            return "No hay estudiantes cargados al sistema"
+
+    def graficarCursos_inter(self, actual, carnet, año, semestre, tipo):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                return actual.estudiante.años.graficarCursos(año,semestre, tipo)
+            elif int(carnet) < int(actual.estudiante.carnet):
+                return self.graficarCursos_inter(actual.izq, carnet,año,semestre, tipo)
+            else:
+                return self.graficarCursos_inter(actual.der, carnet, año, semestre, tipo)
+        else:
+            return "No existe un estudiante con ese carnet"
+
+    

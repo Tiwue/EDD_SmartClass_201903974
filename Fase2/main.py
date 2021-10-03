@@ -94,11 +94,32 @@ def graficar():
         respuesta=Estudiantes.graficarLista(datos["carnet"], int(datos["año"]), int(datos["mes"]),int(datos["dia"]), int(datos["hora"]))
     elif datos["tipo"]==3:
         respuesta = Pensum.Graficar("Pensum")
-
+    elif datos["tipo"]==4:
+        respuesta=Estudiantes.graficarCursos(datos["carnet"], int(datos["año"]), int(datos["semestre"]),"Estudiante")    
+    else:
+        respuesta="Tipo de reporte no valido"
     return jsonify({"Mensaje":respuesta})    
+
+@app.route("/estudiante", methods=["POST","GET","PUT","DELETE"])
+def crudEstudiante():
+    respuesta=""
+    if request.method=="POST":
+        datos=request.get_json()
+        estudiante1=Estudiante(datos["carnet"],datos["dpi"],datos["nombre"],datos["carrera"],datos["password"],datos["creditos"],int(datos["edad"]), datos["correo"])
+        Estudiantes.insertar(estudiante1)
+        respuesta="Estudiante agragado con exito :)"
+        return jsonify({"Mensaje":respuesta}) 
+    elif request.method=="GET":
+        datos=request.get_json()
+        e1=Estudiantes.buscar(datos["carnet"])
+        return jsonify({"Carnet":e1.carnet,"DPI":e1.dpi,"Nombre":e1.nombre,"Carrera":e1.carrera,"Password":e1.password,"Creditos":e1.creditos,"Edad":e1.edad,"Correo":e1.correo})
+        
+           
+
+
 
 if __name__ == "__main__":
     app.run(port=3000)    
 
-#"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\codigo.txt"
+#"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\Estudiantes.txt"
 #"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\Cursos.json"

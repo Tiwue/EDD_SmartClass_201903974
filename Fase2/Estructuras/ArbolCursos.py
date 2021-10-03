@@ -187,7 +187,7 @@ class ArbolCursos:
         self.grafica+="\n}\n"
         s = Source(self.grafica, filename=("Cursos"+tipo),directory='C:\\Users\\steve\\Desktop\\Reportes_F2',format='pdf') 
         s.view()
-        return "Arbol Pensum graficado exitosamente"
+        return "Arbol "+tipo+" graficado exitosamente"
     
     def Graficar2(self, pagina):
         contador=0

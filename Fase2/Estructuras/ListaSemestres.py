@@ -45,4 +45,14 @@ class ListaSemestres:
             if aux.semestre == semestre:
                 return True
             aux = aux.next
-        return False            
+        return False
+
+    def graficarCursos(self, semestre, tipo):
+        if self.exist(semestre):
+            aux = self.Primero
+            while aux is not None:
+                if aux.semestre == semestre:
+                    return aux.cursos.Graficar(tipo)
+                aux = aux.next
+        else:    
+            return "no existe el semestre solicitado para graficar los cursos"                
