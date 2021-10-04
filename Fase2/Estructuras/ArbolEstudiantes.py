@@ -230,18 +230,18 @@ class ArbolEstudiantes:
                 aux=actual.der
                 if actual.izq is not None:
                     nuevo= self.ultimoDer(actual)
+                    self.setNone(nuevo.estudiante.carnet)
                     actual.estudiante=nuevo.estudiante
-                    self.borrarUltimoDer(actual)
                     if nuevo.izq is not None:
                         self.insertarElim(nuevo.izq)
                     if nuevo.der is not None:
                         self.insertarElim(nuevo.der)
                     actual.der=None
                     self.insertarElim(aux)    
-
+                    return "Estudiante Eliminado"
                 else:
                     actual=actual.der
-
+                    return "Estudiante Eliminado"
                 
 
             elif int(carnet) < int(actual.estudiante.carnet):
@@ -259,13 +259,18 @@ class ArbolEstudiantes:
                     actual=actual.der
         return actual
 
-    def borrarUltimoDer(self, actual):
+    def setNone(self, carnet):
+        if self.raiz is not None:
+            self.setNone_inter(self.raiz, carnet)
+
+    def setNone_inter(self, actual, carnet):
         if actual is not None:
-            if actual.izq is not None:
-                actual=actual.izq
-                while actual.der is not None:
-                    actual=actual.der
-        actual = None
+            if actual.estudiante.carnet==carnet:
+                actual=None
+            elif int(carnet) < int(actual.estudiante.carnet):
+                self.setNone_inter(actual.izq, carnet)
+            else:
+                self.setNone_inter(actual.der, carnet)
 
     def insertarElim(self, actual):
         if actual is not None:

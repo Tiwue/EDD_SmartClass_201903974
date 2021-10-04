@@ -125,7 +125,21 @@ def crudEstudiante():
         respuesta=Estudiantes.eliminar(datos["carnet"])
         return jsonify({"Mensaje":respuesta})
            
-
+@app.route("/recordatorios",methods=["POST"])
+def crudRecordatorio():
+    if request.method=="POST":
+        datos=request.get_json()
+        mes1=datos["Fecha"][2:5]
+        mes2=mes1.replace('/','')
+        dia1=datos["Fecha"][0:2]
+        dia2=dia1.replace('/','')
+        año1=datos["Fecha"][6:10]
+        año2=año1.replace('/','')
+        hora1=datos["Hora"][0:2]
+        hora2=hora1.replace(':','')
+        tarea1 = Tarea(datos["Nombre"],datos["Carnet"],datos["Descripcion"],datos["Materia"],datos["Fecha"],datos["Hora"],datos["Estado"],int(mes2),int(dia2))
+        Estudiantes.cargarTarea(datos["Carnet"],int(año2),int(mes2),int(hora2),int(dia2),tarea1)
+        return jsonify({"Mensaje":"recordatorio cargado"}) 
 
 
 if __name__ == "__main__":
