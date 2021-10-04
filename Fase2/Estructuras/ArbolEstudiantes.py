@@ -193,4 +193,86 @@ class ArbolEstudiantes:
         else:
             return "No existe un estudiante con ese carnet"
 
+    def modificar(self, carnet, dpi, nombre,carrera,correo,password, creditos,edad):
+        
+        if self.raiz is not None:
+            return self.modificar_inter(self.raiz, carnet, dpi, nombre,carrera,correo,password, creditos,edad)
+        else:
+            return "No existen estudiantes cargados al sistema"    
+
+    def modificar_inter(self, actual, carnet, dpi, nombre,carrera,correo,password, creditos,edad):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                actual.estudiante.dpi=dpi
+                actual.estudiante.nombre=nombre
+                actual.estudiante.carrera=carrera
+                actual.estudiante.correo=correo
+                actual.estudiante.password=password
+                actual.estudiante.creditos=creditos
+                actual.estudiante.edad=edad
+                return "Estudiante modificado con exito"
+            elif int(carnet) < int(actual.estudiante.carnet):
+                return self.modificar_inter(actual.izq, carnet, dpi, nombre,carrera,correo,password, creditos,edad)
+            else:
+                return self.modificar_inter(actual.der, carnet, dpi, nombre,carrera,correo,password, creditos,edad)
+        else:
+            return "No se encontró un estudiante con ese carnet"
+
+    def eliminar(self, carnet):
+        if self.raiz is not None:
+            return self.eliminar_inter(self.raiz,carnet)
+        else:
+            return "No existen estudiantes cargados al sistema"
+
+    def eliminar_inter(self,actual,carnet):
+        if actual is not None:
+            if actual.estudiante.carnet==carnet:
+                aux=actual.der
+                if actual.izq is not None:
+                    nuevo= self.ultimoDer(actual)
+                    actual.estudiante=nuevo.estudiante
+                    self.borrarUltimoDer(actual)
+                    if nuevo.izq is not None:
+                        self.insertarElim(nuevo.izq)
+                    if nuevo.der is not None:
+                        self.insertarElim(nuevo.der)
+                    actual.der=None
+                    self.insertarElim(aux)    
+
+                else:
+                    actual=actual.der
+
+                
+
+            elif int(carnet) < int(actual.estudiante.carnet):
+                return self.eliminar_inter(actual.izq, carnet)
+            else:
+                return self.eliminar_inter(actual.der, carnet)
+        else:
+            return "No se encontró un estudiante con ese carnet"    
     
+    def ultimoDer(self, actual):
+        if actual is not None:
+            if actual.izq is not None:
+                actual=actual.izq
+                while actual.der is not None:
+                    actual=actual.der
+        return actual
+
+    def borrarUltimoDer(self, actual):
+        if actual is not None:
+            if actual.izq is not None:
+                actual=actual.izq
+                while actual.der is not None:
+                    actual=actual.der
+        actual = None
+
+    def insertarElim(self, actual):
+        if actual is not None:
+            self.insertar(actual.estudiante)
+            if actual.izq is not None:
+                self.insertarElim(actual.izq)
+            if actual.der is not None:
+                self.insertarElim(actual.der)    
+
+

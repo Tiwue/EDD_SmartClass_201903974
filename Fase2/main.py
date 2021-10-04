@@ -105,15 +105,25 @@ def crudEstudiante():
     respuesta=""
     if request.method=="POST":
         datos=request.get_json()
-        estudiante1=Estudiante(datos["carnet"],datos["dpi"],datos["nombre"],datos["carrera"],datos["password"],datos["creditos"],int(datos["edad"]), datos["correo"])
+        estudiante1=Estudiante(datos["carnet"],datos["DPI"],datos["nombre"],datos["carrera"],datos["password"],datos["creditos"],int(datos["edad"]), datos["correo"])
         Estudiantes.insertar(estudiante1)
         respuesta="Estudiante agragado con exito :)"
         return jsonify({"Mensaje":respuesta}) 
     elif request.method=="GET":
         datos=request.get_json()
-        e1=Estudiantes.buscar(datos["carnet"])
-        return jsonify({"Carnet":e1.carnet,"DPI":e1.dpi,"Nombre":e1.nombre,"Carrera":e1.carrera,"Password":e1.password,"Creditos":e1.creditos,"Edad":e1.edad,"Correo":e1.correo})
-        
+        e1=Estudiantes.buscar(datos["carnet"]).estudiante
+        if e1 != None:
+            return jsonify({"Carnet":e1.carnet,"DPI":e1.dpi,"Nombre":e1.nombre,"Carrera":e1.carrera,"Password":e1.password,"Creditos":e1.creditos,"Edad":e1.edad,"Correo":e1.correo})
+        else:
+            return jsonify({"Mensaje":"No se encontró el estudiante"})
+    elif request.method=="PUT":
+        datos=request.get_json()
+        respuesta=Estudiantes.modificar(datos["carnet"],datos["DPI"],datos["nombre"],datos["carrera"],datos["correo"],datos["password"],datos["creditos"],datos["edad"])
+        return jsonify({"Mensaje":respuesta})
+    elif request.method=="DELETE":
+        datos=request.get_json()
+        respuesta=Estudiantes.eliminar(datos["carnet"])
+        return jsonify({"Mensaje":respuesta})
            
 
 
@@ -121,5 +131,5 @@ def crudEstudiante():
 if __name__ == "__main__":
     app.run(port=3000)    
 
-#"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\Estudiantes.txt"
+#"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\codigo.txt"
 #"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\Cursos.json"
