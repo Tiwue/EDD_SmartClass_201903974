@@ -145,5 +145,5 @@ def crudRecordatorio():
 if __name__ == "__main__":
     app.run(port=3000)    
 
-#"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\codigo.txt"
+#"path":"C:\\Users\\steve\\Desktop\\Estudiantes.txt"
 #"path":"C:\\Users\\steve\\Desktop\\EDD\\EDD_SmartClass_201903974\\EDD_SmartClass_201903974\\Fase2\\Cursos.json"

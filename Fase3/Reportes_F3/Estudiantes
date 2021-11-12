@@ -1,0 +1,3 @@
+digraph G {rankdir="TB"
+ node [margin=0.3 fontcolor=black  width=0.5 fontname="Comic Sans MS" shape=box3d style=filled]
+"Aun no se cargan Estudiantes"}

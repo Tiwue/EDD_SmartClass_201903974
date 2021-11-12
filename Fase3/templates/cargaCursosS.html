@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cliente</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DotGothic16&family=Neucha&family=Patrick+Hand+SC&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+
+<body style="padding-bottom: 355px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Smart Class</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" type="button" onclick="location.href = 'home'">Regresar
+          </a>
+        </li>
+      </ul>
+     
+    </div>
+  </div>
+</nav>
+<div align="center">
+<h1 class="text-success">Carga masiva cursos de estudiantes</h1>
+</div>
+<div class="container bg-dark w-25 p-5" style="margin-top: 50px; border-radius: 5px;">
+    <input type="file" id="fileChooser" style="display: none;" />
+    <div align="center" style="padding-top: 10px;">
+    <button class="btn-lg btn-outline-success"
+      onclick="cargarArchivo(fileChooser)">Cargar
+      archivo</button>
+    </div>
+
+ 
+</div>
+  
+<div align="center" style="display: none;" id="modal">
+<div class="alert alert-dismissible alert-warning" style="width: 400px; margin-top: 10px;" align="center">
+  
+  <h4 class="alert-heading">Warning!</h4>
+  <p class="mb-0" id="mensaje"></p>
+</div>
+</div>
+
+</body>
+
+
+<script>
+var fileChooser = document.getElementById('fileChooser');
+  if (fileChooser)
+    fileChooser.addEventListener("change", subirArchivo)
+
+  function subirArchivo()
+  {
+    let reader = new FileReader();
+
+    reader.onload = function ()
+    {
+      let datos = {
+        data: reader.result.replace('data:', '').replace(/^.+,/, '')
+      }
+      fetch('/cargaCursosS', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(datos)
+      }).then(res => res.json()).then(function(dataR) { 
+            console.log(dataR.msg)
+			document.getElementById("mensaje").innerHTML = dataR.msg;
+            document.getElementById("modal").style.display="block"
+		    
+	    
+	    return "";
+    });
+    }
+
+    reader.onerror = function (error)
+    {
+      console.log('Error: ', error);
+    };
+
+    reader.readAsDataURL(fileChooser.files[0]);
+  }
+
+  function cargarArchivo(input)
+  {
+    input.click();
+  }      
+</script>
+
+</html>

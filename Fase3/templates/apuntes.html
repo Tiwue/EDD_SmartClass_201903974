@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cliente</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DotGothic16&family=Neucha&family=Patrick+Hand+SC&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<style>
+
+th {
+    padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+  background-color: gray;
+  color: white;
+  
+}
+th, td {
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+td{
+    background-color: whitesmoke;
+    color: black;
+    text-align: center;
+}
+table{
+    border: 1px solid white;
+    width: 100%;
+
+}
+</style>
+<body style="padding-bottom: 355px;">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Smart Class</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarColor02">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" onclick="location.href = 'logout'">Cerrar Sesion
+          </a>
+        </li>
+      </ul>
+     
+    </div>
+  </div>
+</nav>
+
+<div class="d-grid gap-2" style="margin-top: 10px;margin-bottom: 10px;align-items: center;" align="center">
+    <button class="btn btn-lg btn-primary" type="button" onclick="view()">Ver apuntes</button>
+    <button class="btn btn-lg btn-primary" type="button" onclick="create()">Crear Apuntes</button>
+  </div>
+
+
+
+<div id="mostrar" class="container bg-dark " style="border-radius: 5px;display: block;">
+    <legend class="text-center">Mis Apuntes:</legend>
+    
+    <table >
+        <tr>
+            <th>ID</th>
+          <th>Titulo</th>
+          <th></th>
+          
+        </tr>
+        {% for apunte in apuntes %}
+        <tr>
+            <td>{{apunte.id}}</td>
+          <td>{{apunte.titulo}}</td>
+          <td><button class="btn btn-lg btn-primary" type="button" onclick="location.href = 'apunte/{{apunte.id}}'">Ver</button></td>
+        </tr>
+        {% endfor %}
+      </table>
+    
+</div>
+    
+    <div id="crear"class="container bg-dark " style="margin-top: 50px; border-radius: 5px;display: none;">
+      <form method="POST">
+        <legend class="text-center">Crear Apunte:</legend>
+            <div class="form-group">
+            <a>Titulo:</a>  
+            <input type="text" id="titulo" class="form-control"  placeholder="Ingrese titulo" name="titulo">
+            </div>
+            <div class="form-group">
+              <a>Contenido:</a>  
+              <textarea type="text" id="apunte" class="form-control"  placeholder="Contenido del apunte" name="apunte" style="height: 300px;"></textarea>
+              </div>
+           
+            
+            <button class="btn btn-outline-success btn-block text-center" type="submit">Guardar!</button>
+        </form>
+    </div>
+</div>
+
+</body>
+
+
+<script>
+function create() {
+  document.getElementById("crear").style.display = "block";
+  document.getElementById("mostrar").style.display = "none";
+}
+
+function view() {
+  document.getElementById("mostrar").style.display = "block";
+  document.getElementById("crear").style.display = "none";
+
+}
+
+
+</script>
+</html>

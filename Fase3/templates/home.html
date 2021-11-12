@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Cliente</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Bungee&family=DotGothic16&family=Neucha&family=Patrick+Hand+SC&family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<style>
+    
+  .container-blog {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    grid-gap: 10px;
+  }
+  
+  .first {
+    grid-area: 1 / 1 / span 3 / span 1;
+  }
+  .second {
+    grid-area: 3 / 1 / span 3 / span 1;
+  }
+  .three {
+    grid-area: 1 / 2 / span 2 / span 1;
+  }
+  .four {
+    grid-area: 3 / 2 / span 2 / span 1;
+  }
+  .five{
+    grid-area: 5 / 1 / span 2 / span 1;
+  }
+  .six{
+    grid-area: 5 / 2 / span 2 / span 1;
+  }
+  .container-blog-parrafo {
+    margin: 0;
+    text-align: center;
+    background-color: crimson;
+    color: white;
+  }
+</style>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Smart Class</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav me-auto">
+          <li class="nav-item">
+            <a class="nav-link active" type="button" onclick="location.href = 'logout'">Cerrar Sesion
+            </a>
+          </li>
+          {%if nivel == "admin" %}
+          <li class="nav-item">
+            <a class="nav-link active" type="button" onclick="location.href = 'admon'">Administración
+            </a>
+          </li>
+          {%endif%}
+        </ul>
+       
+      </div>
+    </div>
+  </nav>
+
+  <h1 class="text-info" align="center">Bienvenido {{usuario}}</h1> 
+ 
+    
+  <section class="container-blog">
+    <article class="container-blog__article first">
+        {%if nivel=="estudiante"%}
+        <button class="btn btn-lg btn-danger" onclick="location.href='apuntes'" style="width: 100%;height: 100px;font-size: large;">Apuntes</button>
+        {%endif%}
+    </article>
+    <article class="container-blog__article second">
+      {%if nivel=="estudiante"%}
+      <button class="btn btn-lg btn-success" onclick="location.href='home'" style="width: 100%;height: 100px;font-size: large;">Asignar Cursos</button>
+      {%endif%}
+  </article>
+  <article class="container-blog__article three">
+    {%if nivel=="estudiante"%}
+    <button class="btn btn-lg btn-info" onclick="location.href='home'" style="width: 100%;height: 100px;font-size: large;">Reportes</button>
+    {%endif%}
+</article>
+<article class="container-blog__article four">
+  {%if nivel=="estudiante"%}
+  <button class="btn btn-lg btn-warning" onclick="location.href='home'" style="width: 100%;height: 100px;font-size: large;">Tareas</button>
+  {%endif%}
+</article>
+</section>
+
+<section class="container-blog">
+<article class="container-blog__article first">
+  {%if nivel=="admin"%}
+  <button class="btn btn-lg btn-danger" onclick="location.href='cargaEstudiantes'" style="width: 100%;height: 100px;font-size: large;">Carga Estudiantes</button>
+  {%endif%}
+</article>
+
+<article class="container-blog__article second">
+{%if nivel=="admin"%}
+<button class="btn btn-lg btn-success" onclick="location.href='cargaCursos'" style="width: 100%;height: 100px;font-size: large;">Carga Cursos Pensum</button>
+{%endif%}
+</article>
+<article class="container-blog__article three">
+{%if nivel=="admin"%}
+<button class="btn btn-lg btn-info" onclick="location.href='CargaCursosS'" style="width: 100%;height: 100px;font-size: large;">Carga Masiva Cursos Estudiante</button>
+{%endif%}
+</article>
+<article class="container-blog__article four">
+{%if nivel=="admin"%}
+<button class="btn btn-lg btn-warning" onclick="location.href='CargaApuntes'" style="width: 100%;height: 100px;font-size: large;">Carga Masiva de Apuntes de Estudiantes</button>
+{%endif%}
+
+</article>
+<article class="container-blog__article five">
+  {%if nivel=="admin"%}
+  <button class="btn btn-lg btn-warning" onclick="location.href='reporteEstudiantes'" style="width: 100%;height: 100px;font-size: large;">Reporte Estudiantes</button>
+  {%endif%}
+  
+  </article>
+
+  <article class="container-blog__article six">
+    {%if nivel=="admin"%}
+    <button class="btn btn-lg btn-warning" onclick="location.href='home'" style="width: 100%;height: 100px;font-size: large;">Reporte de Apuntes de estudiantes</button>
+    {%endif%}
+    
+    </article>
+
+  </section>
+</body>
+  </html>
